@@ -1,0 +1,149 @@
+﻿<!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+<div class="fixed inset-0 flex z-40 md:hidden @(_sidebarHidden ? "hidden" : string.Empty)" role="dialog" aria-modal="true">
+    <!--
+    Off-canvas menu overlay, show/hide based on off-canvas menu state.
+
+    Entering: "transition-opacity ease-linear duration-300"
+    From: "opacity-0"
+    To: "opacity-100"
+    Leaving: "transition-opacity ease-linear duration-300"
+    From: "opacity-100"
+    To: "opacity-0"
+    -->
+    <TransitionElement OnTransitionEnded="OnSidebarTransitionEnd">
+        <Content>
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-75 @(ShowSidebar ? MenuOverlayShowCss : MenuOverlayHideCss)" aria-hidden="true"></div>
+        </Content>
+    </TransitionElement>
+
+    <!--
+    Off-canvas menu, show/hide based on off-canvas menu state.
+
+    Entering: "transition ease-in-out duration-300 transform"
+    From: "-translate-x-full"
+    To: "translate-x-0"
+    Leaving: "transition ease-in-out duration-300 transform"
+    From: "translate-x-0"
+    To: "-translate-x-full"
+    -->
+    <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800 @(ShowSidebar ? MenuShowCss : MenuHideCss)">
+        <!--
+        Close button, show/hide based on off-canvas menu state.
+
+        Entering: "ease-in-out duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+        Leaving: "ease-in-out duration-300"
+        From: "opacity-100"
+        To: "opacity-0"
+        -->
+        <div class="absolute top-0 right-0 -mr-12 pt-2 @(ShowSidebar ? MenuCloseShowCss : MenuCloseHideCss)" @onclick="ToggleMobileSidebar">
+            <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <span class="sr-only">Close sidebar</span>
+                <XIcon class="h-6 w-6 text-white"/>
+            </button>
+        </div>
+
+        <div class="flex-shrink-0 flex items-center px-4">
+            <img class="h-8 w-auto" src="images/jellyfin-banner-dark.svg" alt="Jellyfin"/>
+        </div>
+        <div class="mt-5 flex-1 h-0 overflow-y-auto">
+            <nav class="px-2 space-y-1">
+                <a @onclick="NavigateToDashboard" class="@LinkCssClass @(string.IsNullOrEmpty(_currentRoute) ? "bg-gray-600" : string.Empty)">
+                    <HomeIcon class="@IconCssClass"/>
+                    Dashboard
+                </a>
+
+                @if (_views is not null)
+                {
+                    foreach (var view in _views.Items)
+                    {
+                        <a @onclick="() => NavigateToView(view.Id)" class="@LinkCssClass @(_currentRoute.EndsWith(view.Id.ToString(), StringComparison.Ordinal) ? "bg-gray-600" : string.Empty)">
+                            @{
+                                if (string.Equals(view.CollectionType, "movies", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <FilmIcon class="@IconCssClass"/>
+                                }
+                                else if (string.Equals(view.CollectionType, "tvshows", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <VideoCameraIcon class="@IconCssClass"/>
+                                }
+                                else if (string.Equals(view.CollectionType, "music", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    <MusicNoteIcon class="@IconCssClass"/>
+                                }
+                                else
+                                {
+                                    <FolderIcon class="@IconCssClass"/>
+                                }
+                            }
+                            @view.Name
+                        </a>
+                    }
+                }
+
+                <a @onclick="NavigateToLogout" class="@LinkCssClass">
+                    <LogoutIcon class="@IconCssClass"/>
+                    Logout
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="flex-shrink-0 w-14" aria-hidden="true">
+        <!-- Dummy element to force sidebar to shrink to fit close icon -->
+    </div>
+</div>
+
+<!-- Static sidebar for desktop -->
+<div class="hidden md:flex md:flex-shrink-0">
+    <div class="flex flex-col w-64">
+        <!-- Sidebar component, swap this element with another sidebar if you like -->
+        <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
+            <div class="flex items-center flex-shrink-0 px-4">
+                <img class="h-8 w-auto" src="images/jellyfin-banner-dark.svg" alt="Jellyfin">
+            </div>
+            <div class="mt-5 flex-1 flex flex-col">
+                <nav class="flex-1 px-2 space-y-1">
+                    <a @onclick="NavigateToDashboard" class="@LinkCssClass @(string.IsNullOrEmpty(_currentRoute) ? "bg-gray-600" : string.Empty)">
+                        <HomeIcon class="@IconCssClass"/>
+                        Dashboard
+                    </a>
+
+                    @if (_views is not null)
+                    {
+                        foreach (var view in _views.Items)
+                        {
+                            <a @onclick="() => NavigateToView(view.Id)" class="@LinkCssClass @(_currentRoute.EndsWith(view.Id.ToString(), StringComparison.Ordinal) ? "bg-gray-600" : string.Empty)">
+                                @{
+                                    if (string.Equals(view.CollectionType, "movies", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <FilmIcon class="@IconCssClass"/>
+                                    }
+                                    else if (string.Equals(view.CollectionType, "tvshows", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <VideoCameraIcon class="@IconCssClass"/>
+                                    }
+                                    else if (string.Equals(view.CollectionType, "music", StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <MusicNoteIcon class="@IconCssClass"/>
+                                    }
+                                    else
+                                    {
+                                        <FolderIcon class="@IconCssClass"/>
+                                    }
+                                }
+                                @view.Name
+                            </a>
+                        }
+                    }
+
+                    <a @onclick="NavigateToLogout" class="@LinkCssClass">
+                        <LogoutIcon class="@IconCssClass"/>
+                        Logout
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

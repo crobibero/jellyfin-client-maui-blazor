@@ -1,0 +1,49 @@
+﻿@page "/view/{LibraryId:guid}"
+@layout MainLayout
+
+@if (_loading)
+{
+    <Wave class="sk-white"/>
+}
+else if (_library is null)
+{
+    <span>No results.</span>
+}
+else
+{
+    <h1>@_library.Name</h1>
+                      
+    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        @foreach (var item in _items)
+        {
+            <PrimaryCard Item="item"/>
+        }
+    </ul>
+    @*<Pagination>
+        <PaginationItem>
+            <PaginationLink>
+                <span aria-hidden="true">«</span>
+            </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+            <PaginationLink>
+                1
+            </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+            <PaginationLink>
+                2
+            </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+            <PaginationLink>
+                3
+            </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+            <PaginationLink>
+                <span aria-hidden="true">»</span>
+            </PaginationLink>
+        </PaginationItem>
+    </Pagination>*@
+}
