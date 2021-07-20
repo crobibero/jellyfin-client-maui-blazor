@@ -19,28 +19,29 @@
 	
 	<ItemGroup>
 		<PackageReference Include="Blazor.Extensions.Logging" Version="2.0.4" />
-		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.3.6" />
+		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.4" />
 		<PackageReference Include="BlazorPro.Spinkit" Version="1.2.0" />
 		<PackageReference Include="Feather.Blazor" Version="1.0.1" />
 		<PackageReference Include="HeroIcons.Blazor" Version="1.0.1" />
-		<PackageReference Include="Jellyfin.Sdk" Version="10.7.5.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.0-preview.4.21253.5" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="6.0.100-preview.4.*">
+		<PackageReference Include="Jellyfin.Sdk" Version="10.7.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.0-preview.6.21355.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="6.0.100-preview.6.1003">
 			<ExcludeAssets>build</ExcludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.4.*" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-		<PackageReference Include="Microsoft.ProjectReunion" Version="[0.5.6]">
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="6.0.0-preview.6.21355.2" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0-preview.6.21352.12" />
+		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.1">
 			<IncludeAssets>build</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.4.*" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="6.0.100-preview.4.*" />
 		<PackageReference Include="Microsoft.Maui.Resizetizer" Version="6.0.100-preview.4.*" />
+		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.1" />
 		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-		<PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
-		<PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

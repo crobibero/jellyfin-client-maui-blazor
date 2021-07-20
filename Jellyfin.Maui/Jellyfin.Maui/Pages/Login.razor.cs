@@ -10,9 +10,9 @@ namespace Jellyfin.Maui.Pages
     /// <summary>
     /// The login page.
     /// </summary>
-    public partial class Login
+    public partial class Login : ComponentBase
     {
-        private readonly LoginPageModel _loginPageModel = new ();
+        private readonly LoginPageModel _loginPageModel = new();
         private bool _loading;
         private string? _error;
 
@@ -30,18 +30,18 @@ namespace Jellyfin.Maui.Pages
             _loading = true;
             try
             {
-                var result = await AuthenticationService.AuthenticateAsync(
+                var (status, errorMessage) = await AuthenticationService.AuthenticateAsync(
                         _loginPageModel.Host,
                         _loginPageModel.Username,
                         _loginPageModel.Password)
                     .ConfigureAwait(false);
-                if (result.Status)
+                if (status)
                 {
                     NavigationManager.NavigateTo(string.Empty);
                 }
                 else
                 {
-                    _error = result.ErrorMessage;
+                    _error = errorMessage;
                 }
             }
             catch (Exception ex)

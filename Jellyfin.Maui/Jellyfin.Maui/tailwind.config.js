@@ -2,7 +2,6 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
     purge: {
-        enabled: true,
         content: [
             './**/*.html',
             './**/*.razor',
@@ -26,7 +25,18 @@ module.exports = {
             purple: colors.violet,
             pink: colors.pink,
         },
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: [
+                    '"Noto Sans"',
+                    '"Noto Sans HK"',
+                    '"Noto Sans JP"',
+                    '"Noto Sans KR"',
+                    '"Noto Sans SC"',
+                    'sans-serif'
+                ]
+            },
+        },
     },
     variants: {
         extend: {},

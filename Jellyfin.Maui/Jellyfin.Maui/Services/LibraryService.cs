@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Sdk;
 
@@ -114,15 +115,17 @@ namespace Jellyfin.Maui.Services
         }
 
         /// <inheritdoc />
-        public Task<IReadOnlyList<BaseItemDto>> GetRecentlyAdded(Guid libraryId)
+        public async Task<IReadOnlyList<BaseItemDto>> GetRecentlyAdded(Guid libraryId, CancellationToken cancellationToken = default)
         {
-            return _userLibraryClient.GetLatestMediaAsync(
-                userId: _userId,
-                limit: 24,
-                fields: new[] { ItemFields.PrimaryImageAspectRatio },
-                imageTypeLimit: 1,
-                enableImageTypes: new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Thumb },
-                parentId: libraryId);
+            return await _userLibraryClient.GetLatestMediaAsync(
+                    userId: _userId,
+                    limit: 24,
+                    fields: new[] { ItemFields.PrimaryImageAspectRatio },
+                    imageTypeLimit: 1,
+                    enableImageTypes: new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Thumb },
+                    parentId: libraryId,
+                    cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
         }
 
         private string GetViewType(string collectionType)

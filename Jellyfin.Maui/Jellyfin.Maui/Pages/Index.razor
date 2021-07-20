@@ -1,42 +1,62 @@
 ﻿@page "/"
 @layout MainLayout
 
-@if (_continueWatching is not null && _continueWatching.Count != 0)
+@if (_continueWatching?.Count != 0)
 {
-    <h3>Continue Watching</h3>
-    <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        @foreach (var item in _continueWatching)
-        {
-            <PrimaryCard Item="item"/>
-        }
-    </ul>
+    <h2>Continue Watching</h2>
+    if (_continueWatching is null)
+    {
+        <LoadingComponent/>
+    }
+    else
+    {
+        <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+            @foreach (var item in _continueWatching)
+            {
+                <PrimaryCardComponent Item="item"/>
+            }
+        </ul>
+    }
 }
 
-@if (_nextUp is not null && _nextUp.Count != 0)
+@if (_nextUp?.Count != 0)
 {
     <h2>Next Up</h2>
-    <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        @foreach (var item in _nextUp)
-        {
-            <PrimaryCard Item="item"/>
-        }
-    </ul>
+    if (_nextUp is null)
+    {
+        <LoadingComponent/>
+    }
+    else
+    {
+        <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+            @foreach (var item in _nextUp)
+            {
+                <PrimaryCardComponent Item="item"/>
+            }
+        </ul>
+    }
 }
 
 @if (_libraries is not null && _libraries.Length != 0)
 {
-    <h3>Libraries</h3>
     foreach (var (library, items) in _libraries)
     {
-        if (items.Count != 0)
+        if (items?.Count != 0)
         {
-            <h3>@library.Name</h3>
-            <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                @foreach (var item in items)
-                {
-                    <PrimaryCard Item="@item"/>
-                }
-            </ul>
+            <h2>@library.Name</h2>
+            if (items is null)
+            {
+                <LoadingComponent/>
+            }
+            else
+            {
+                <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+                    @foreach (var item in items)
+                    {
+                        <PrimaryCardComponent Item="@item"/>
+                    }
+                </ul>
+            }
         }
     }
 }

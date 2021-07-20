@@ -16,12 +16,12 @@
                     </label>
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <LinkIcon class="h-5 w-5 text-gray-400"/>
+                            <span class="mdi mdi-link h-5 w-5 text-gray-400"></span>
                         </div>
                         <input id="host"
                                type="text"
                                placeholder="Host"
-                               @bind="_loginPageModel.Host"
+                               @bind-value="_loginPageModel.Host"
                                class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                     </div>
                 </div>
@@ -32,12 +32,12 @@
                     </label>
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <UserIcon class="h-5 w-5 text-gray-400"/>
+                            <span class="mdi mdi-account h-5 w-5 text-gray-400"></span>
                         </div>
                         <input id="username"
                                type="text"
                                placeholder="Username"
-                               @bind="_loginPageModel.Username"
+                               @bind-value="_loginPageModel.Username"
                                class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                     </div>
                 </div>
@@ -49,12 +49,12 @@
                     </label>
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <LockClosedIcon class="h-5 w-5 text-gray-400"/>
+                            <span class="mdi mdi-lock h-5 w-5 text-gray-400"></span>
                         </div>
                         <input id="password"
                                type="password"
                                placeholder="Password"
-                               @bind="_loginPageModel.Password"
+                               @bind-value="_loginPageModel.Password"
                                class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                     </div>
                 </div>

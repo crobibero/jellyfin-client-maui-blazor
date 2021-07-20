@@ -1,7 +1,7 @@
 ﻿using Jellyfin.Maui.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace Jellyfin.Blazor.WebUI.Pages
+namespace Jellyfin.Maui.Pages
 {
     /// <summary>
     /// The logout page.

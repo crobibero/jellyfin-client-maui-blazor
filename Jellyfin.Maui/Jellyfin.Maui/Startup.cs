@@ -7,13 +7,11 @@ using Jellyfin.Sdk;
 using Microsoft.AspNetCore.Components.Authorization;
 using Jellyfin.Maui.Services;
 using Serilog;
-using Serilog.Events;
-using System.IO;
-using Blazor.Extensions.Logging;
 using System.Net.Http;
 using System;
 using System.Net;
 using System.Text;
+using Microsoft.Maui.Controls.Hosting;
 
 namespace Jellyfin.Maui
 {

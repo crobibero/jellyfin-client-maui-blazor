@@ -1,0 +1,23 @@
+﻿@page "/view/{LibraryId:guid}"
+@layout MainLayout
+
+<h1>@_library?.Name</h1>
+
+@if (_loading)
+{
+    <LoadingComponent/>
+}
+else
+{
+    <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+        @foreach (var item in _items)
+        {
+            <PrimaryCardComponent Item="item"/>
+        }
+    </ul>
+}
+
+<PagerComponent
+    CurrentPage="@_pageIndex"
+    PageCount="@_pageCount"
+    OnPageChanged="@OnPageChangedAsync"/>

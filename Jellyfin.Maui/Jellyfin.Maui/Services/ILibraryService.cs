@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Jellyfin.Sdk;
 
@@ -49,7 +50,8 @@ namespace Jellyfin.Maui.Services
         /// Gets the recently added items.
         /// </summary>
         /// <param name="libraryId">The library id.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The recently added library items.</returns>
-        Task<IReadOnlyList<BaseItemDto>> GetRecentlyAdded(Guid libraryId);
+        Task<IReadOnlyList<BaseItemDto>> GetRecentlyAdded(Guid libraryId, CancellationToken cancellationToken = default);
     }
 }
