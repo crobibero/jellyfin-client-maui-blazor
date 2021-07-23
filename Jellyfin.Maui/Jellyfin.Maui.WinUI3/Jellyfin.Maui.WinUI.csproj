@@ -19,7 +19,7 @@
 	
 	<ItemGroup>
 		<PackageReference Include="Blazor.Extensions.Logging" Version="2.0.4" />
-		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.4" />
+		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.4.1" />
 		<PackageReference Include="BlazorPro.Spinkit" Version="1.2.0" />
 		<PackageReference Include="Feather.Blazor" Version="1.0.1" />
 		<PackageReference Include="HeroIcons.Blazor" Version="1.0.1" />
