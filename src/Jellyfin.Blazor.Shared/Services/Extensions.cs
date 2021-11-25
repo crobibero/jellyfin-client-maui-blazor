@@ -34,7 +34,7 @@ public static class Extensions
         // Register sdk services
         serviceCollection.AddSingleton<SdkClientSettings>();
 
-        static HttpMessageHandler DefaultHttpClientHandlerDelegate(IServiceProvider _)
+        static HttpMessageHandler DefaultHttpClientHandlerDelegate(IServiceProvider serviceProvider)
         {
             if (SocketsHttpHandler.IsSupported)
             {

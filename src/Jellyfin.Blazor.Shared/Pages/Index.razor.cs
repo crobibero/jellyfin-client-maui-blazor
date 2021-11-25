@@ -46,13 +46,14 @@ public partial class Index
                 }, TaskScheduler.Default)
             .SafeFireAndForget();
         LibraryService.GetLibraries()
-            .ContinueWith(task =>
-            {
-                if (task.IsCompletedSuccessfully)
+            .ContinueWith(
+                task =>
                 {
-                    InitializeLibraries(task.Result);
-                }
-            }, TaskScheduler.Default)
+                    if (task.IsCompletedSuccessfully)
+                    {
+                        InitializeLibraries(task.Result);
+                    }
+                }, TaskScheduler.Default)
             .SafeFireAndForget();
     }
 
@@ -78,8 +79,9 @@ public partial class Index
                 lock (_libraryLock)
                 {
                     _libraries[index] = (library, items);
-                    InvokeAsync(() => StateHasChanged());
                 }
+
+                await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
             })
             .SafeFireAndForget();
 

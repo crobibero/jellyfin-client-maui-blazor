@@ -6,8 +6,15 @@ using Microsoft.Maui.Hosting;
 
 namespace Jellyfin.Blazor.Maui;
 
+/// <summary>
+/// The main maui program.
+/// </summary>
 public static class MauiProgram
 {
+    /// <summary>
+    /// Creates the Maui app.
+    /// </summary>
+    /// <returns>The created Maui app.</returns>
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();

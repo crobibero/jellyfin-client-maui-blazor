@@ -9,12 +9,17 @@
 		<SingleProject>true</SingleProject>
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 		<EnableDefaultCssItems>false</EnableDefaultCssItems>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<CodeAnalysisRuleSet>../../jellyfin.ruleset</CodeAnalysisRuleSet>
+		<NoWarn>NU1703;SA1516;SA1027;SA1601;CA5392</NoWarn>
 
 		<!-- Display name -->
-		<ApplicationTitle>Jellyfin.Blazor.Maui</ApplicationTitle>
+		<ApplicationTitle>Jellyfin</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.Jellyfin.Blazor.Maui</ApplicationId>
+		<ApplicationId>org.jellyfin.maui.blazor</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationVersion>1</ApplicationVersion>
@@ -49,6 +54,12 @@
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.29-preview3" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="SerilogAnalyzer" Version="0.15.0" PrivateAssets="All" />
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+		<PackageReference Include="SmartAnalyzers.MultithreadingAnalyzer" Version="1.1.31" PrivateAssets="All" />
+	</ItemGroup>
+	
 	<ItemGroup>
 	  <ProjectReference Include="..\Jellyfin.Blazor.Shared\Jellyfin.Blazor.Shared.csproj" />
 	</ItemGroup>
