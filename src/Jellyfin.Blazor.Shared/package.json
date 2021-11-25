@@ -1,0 +1,32 @@
+{
+  "name": "jellyfin.blazor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:prod": "cross-env NODE_ENV=production postcss wwwroot/css/app.css -o wwwroot/css/app.min.css",
+    "build:dev": "cross-env NODE_ENV=development postcss wwwroot/css/app.css -o wwwroot/css/app.min.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource/noto-sans": "^4.5.1",
+    "@fontsource/noto-sans-hk": "^4.5.2",
+    "@fontsource/noto-sans-jp": "^4.5.2",
+    "@fontsource/noto-sans-kr": "^4.5.2",
+    "@fontsource/noto-sans-sc": "^4.5.2",
+    "@fontsource/noto-sans-tc": "^4.5.2",
+    "@mdi/font": "^6.5.95",
+    "tailwindcss": "^2.2.19"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+    "autoprefixer": "^10.4.0",
+    "cross-env": "^7.0.3",
+    "cssnano": "^5.0.11",
+    "postcss": "^8.4.1",
+    "postcss-cli": "^9.0.2",
+    "postcss-copy": "^7.1.0",
+    "postcss-import": "^14.0.2"
+  }
+}
