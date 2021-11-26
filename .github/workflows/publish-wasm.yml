@@ -38,3 +38,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: ./src/Jellyfin.Blazor.Wasm/dist/wwwroot
+
+      - name: Push to Cloudflare Pages
+        uses: Cyb3r-Jak3/actions-cloudflare-pages@v1
+        working-directory: ./src/Jellyfin.Blazor.Wasm/dist/wwwroot
+        with:
+          account: ${{ secrets.CLOUDFLARE_ZONE }}
+          project: ${{ secrets.CLOUDFLARE_PROJECT }}
+          email: ${{ secrets.CLOUDFLARE_EMAIL }}
+          global_token: ${{ secrets.CLOUDFLARE_KEY }}
