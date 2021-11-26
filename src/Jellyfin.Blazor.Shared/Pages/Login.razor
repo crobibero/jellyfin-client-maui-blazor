@@ -20,7 +20,7 @@ else
                 <EditForm Model="@_loginPageModel" OnValidSubmit="@HandleLogin" class="space-y-6">
                     <div>
                         <label for="host" class="block text-sm font-medium text-gray-700">
-                            Server Address
+                            @Text.LoginHost
                         </label>
                         <div class="mt-1 relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -28,7 +28,7 @@ else
                             </div>
                             <input id="host"
                                    type="text"
-                                   placeholder="Host"
+                                   placeholder="@Text.LoginHostPlaceholder"
                                    @bind-value="_loginPageModel.Host"
                                    class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                         </div>
@@ -36,7 +36,7 @@ else
 
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">
-                            Username
+                            @Text.LoginUsername
                         </label>
                         <div class="mt-1 relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -44,7 +44,7 @@ else
                             </div>
                             <input id="username"
                                    type="text"
-                                   placeholder="Username"
+                                   placeholder="@Text.LoginUsername"
                                    @bind-value="_loginPageModel.Username"
                                    class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                         </div>
@@ -53,7 +53,7 @@ else
                     <div>
                         <label for="password"
                                class="block text-sm font-medium text-gray-700">
-                            Password
+                            @Text.LoginPassword
                         </label>
                         <div class="mt-1 relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -61,7 +61,7 @@ else
                             </div>
                             <input id="password"
                                    type="password"
-                                   placeholder="Password"
+                                   placeholder="@Text.LoginPassword"
                                    @bind-value="_loginPageModel.Password"
                                    class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
                         </div>
@@ -89,7 +89,7 @@ else
                             }
                             else
                             {
-                                <span>Sign in</span>
+                                <span>@Text.LoginButton</span>
                             }
 
                         </button>

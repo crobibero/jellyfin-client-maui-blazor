@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace Jellyfin.Blazor.Shared.Services;
 
@@ -18,13 +19,15 @@ public static class Extensions
     /// <summary>
     /// Adds the required services.
     /// </summary>
-    /// <param name="serviceCollection">Instance of the <see cref="IServiceCollection"/>.</param>
+    /// <param name="serviceCollection">Instance of the <see cref="IServiceCollection" />.</param>
     public static void AddSharedServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddOptions();
         serviceCollection.AddAuthorizationCore();
         serviceCollection.AddScoped<JellyfinAuthStateProvider, JellyfinAuthStateProvider>();
         serviceCollection.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<JellyfinAuthStateProvider>());
+
+        serviceCollection.AddI18nText();
 
         // Register services
         serviceCollection.AddSingleton<IStateService, StateService>();

@@ -41,11 +41,7 @@ public class JellyfinAuthStateProvider : AuthenticationStateProvider
             var currentUser = await _userClient.GetCurrentUserAsync()
                 .ConfigureAwait(false);
             var identity = new ClaimsIdentity(
-                new[]
-                {
-                    new Claim(ClaimTypes.Name, currentUser.Name),
-                    new Claim(ClaimTypes.Sid, currentUser.Id.ToString())
-                },
+                new[] { new Claim(ClaimTypes.Name, currentUser.Name), new Claim(ClaimTypes.Sid, currentUser.Id.ToString()) },
                 "jellyfin");
 
             return new AuthenticationState(new ClaimsPrincipal(identity));

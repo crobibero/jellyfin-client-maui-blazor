@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Jellyfin.Blazor.Shared.I18nText;
 using Jellyfin.Blazor.Shared.PageModels;
 using Jellyfin.Blazor.Shared.Services;
 using Microsoft.AspNetCore.Components;
@@ -35,9 +36,15 @@ public partial class Login
     [Inject]
     private ILogger<Login> Logger { get; init; } = null!;
 
+    [Inject]
+    private Toolbelt.Blazor.I18nText.I18nText I18NText { get; init; } = null!;
+
+    private Text Text { get; set; } = null!;
+
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
+        Text = await I18NText.GetTextTableAsync<Text>(this).ConfigureAwait(false);
         var currentToken = StateService.GetState().Token;
         if (string.IsNullOrEmpty(currentToken))
         {
@@ -92,7 +99,7 @@ public partial class Login
         catch (Exception ex)
         {
             Logger.LogError(ex, "Unhandled exception");
-            _error = "An unknown error occurred";
+            _error = Text.LoginUnknownError;
         }
         finally
         {

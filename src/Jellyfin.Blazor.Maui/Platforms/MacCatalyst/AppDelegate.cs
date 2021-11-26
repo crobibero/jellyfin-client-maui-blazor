@@ -10,7 +10,6 @@ namespace Jellyfin.Blazor.Maui;
 /// The MacCatalyst App Delegate.
 /// </summary>
 [Register("AppDelegate")]
-
 public class AppDelegate : MauiUIApplicationDelegate
 {
     /// <inheritdoc />

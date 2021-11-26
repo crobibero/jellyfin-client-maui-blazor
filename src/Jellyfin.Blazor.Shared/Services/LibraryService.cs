@@ -52,7 +52,7 @@ public class LibraryService : ILibraryService
     public async Task<BaseItemDto?> GetLibrary(Guid id)
     {
         var result = await _itemsClient.GetItemsAsync(
-                userId: _userId,
+                _userId,
                 ids: new[] { id })
             .ConfigureAwait(false);
         return result.Items.Count == 0 ? null : result.Items[0];
@@ -65,7 +65,7 @@ public class LibraryService : ILibraryService
         int startIndex)
     {
         return await _itemsClient.GetItemsAsync(
-                userId: _userId,
+                _userId,
                 recursive: true,
                 sortOrder: new[] { SortOrder.Ascending },
                 parentId: library.Id,
@@ -85,7 +85,7 @@ public class LibraryService : ILibraryService
         foreach (var library in libraryIds)
         {
             var result = await _tvShowsClient.GetNextUpAsync(
-                    userId: _userId,
+                    _userId,
                     limit: 24,
                     fields: new[] { ItemFields.PrimaryImageAspectRatio },
                     imageTypeLimit: 1,
@@ -102,7 +102,7 @@ public class LibraryService : ILibraryService
     public async Task<IReadOnlyList<BaseItemDto>> GetContinueWatching()
     {
         var result = await _itemsClient.GetResumeItemsAsync(
-                userId: _userId,
+                _userId,
                 limit: 24,
                 fields: new[] { ItemFields.PrimaryImageAspectRatio },
                 imageTypeLimit: 1,
@@ -118,7 +118,7 @@ public class LibraryService : ILibraryService
     public async Task<IReadOnlyList<BaseItemDto>> GetRecentlyAdded(Guid libraryId, CancellationToken cancellationToken = default)
     {
         return await _userLibraryClient.GetLatestMediaAsync(
-                userId: _userId,
+                _userId,
                 limit: 24,
                 fields: new[] { ItemFields.PrimaryImageAspectRatio },
                 imageTypeLimit: 1,
