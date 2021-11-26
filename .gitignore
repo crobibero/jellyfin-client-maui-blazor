@@ -242,3 +242,4 @@ pip-log.txt
 # Ignore any generated css files
 *.g.css
 node_modules/
+dist

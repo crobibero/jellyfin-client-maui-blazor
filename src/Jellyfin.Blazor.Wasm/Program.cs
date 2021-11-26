@@ -16,7 +16,7 @@ var clientSettings = host.Services.GetRequiredService<SdkClientSettings>();
 clientSettings.InitializeClientSettings(
     "Jellyfin Blazor",
     "0.0.1",
-    "Desktop",
+    "Wasm",
     Guid.NewGuid().ToString("N"));
 
 await host.RunAsync().ConfigureAwait(false);
