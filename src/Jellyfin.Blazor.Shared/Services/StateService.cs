@@ -7,18 +7,17 @@ namespace Jellyfin.Blazor.Shared.Services;
 /// <inheritdoc />
 public class StateService : IStateService
 {
-    private readonly StateModel _state;
     private readonly SdkClientSettings _sdkClientSettings;
+
+    private StateModel _state;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StateService"/> class.
     /// </summary>
     /// <param name="sdkClientSettings">Instance of the <see cref="SdkClientSettings"/>.</param>
-    public StateService(
-        SdkClientSettings sdkClientSettings)
+    public StateService(SdkClientSettings sdkClientSettings)
     {
         _sdkClientSettings = sdkClientSettings;
-        // TODO load from disk
         _state = new StateModel();
         _sdkClientSettings.BaseUrl = _state.Host;
         _sdkClientSettings.AccessToken = _state.Token;
@@ -64,6 +63,14 @@ public class StateService : IStateService
     public StateModel GetState()
     {
         return _state;
+    }
+
+    /// <inheritdoc />
+    public void SetState(StateModel stateModel)
+    {
+        _state = stateModel;
+        _sdkClientSettings.AccessToken = stateModel.Token;
+        _sdkClientSettings.BaseUrl = stateModel.Host;
     }
 
     /// <inheritdoc />

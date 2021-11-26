@@ -1,0 +1,25 @@
+﻿@page "/play/{itemId:guid}/video"
+
+@using System.ComponentModel.DataAnnotations
+@using Vidazor
+
+<VidazorVideo @ref="_video" OnTimeUpdate="@(() => Console.WriteLine($"Current time is: {_video.CurrentTime}"))">
+    <source src="" />
+</VidazorVideo>
+
+<button type="button" @onclick="() => _video.Play()">Play</button>
+<button type="button" @onclick="() => _video.Pause()">Pause</button>
+<button type="button" @onclick="() => _video.Muted = (!bool.Parse(_video.Muted)).ToString()">Toggle Sound</button>
+
+@code {
+
+    /// <summary>
+    /// Gets the item id for playback.
+    /// </summary>
+    [Parameter]
+    [Required]
+    public Guid ItemId { get; init; }
+    
+    private VidazorVideo _video = null!;
+
+}

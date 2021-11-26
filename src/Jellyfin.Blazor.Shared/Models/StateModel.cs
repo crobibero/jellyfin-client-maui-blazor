@@ -20,5 +20,6 @@ public class StateModel
     /// <summary>
     /// Gets or sets the current user.
     /// </summary>
+    // TODO [JsonIgnore]
     public UserDto? UserDto { get; set; }
 }

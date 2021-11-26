@@ -15,6 +15,7 @@ public class AuthenticationService : IAuthenticationService
     private readonly IStateService _stateService;
     private readonly SdkClientSettings _sdkClientSettings;
     private readonly JellyfinAuthStateProvider _authenticationStateProvider;
+    private readonly IStateStorageService _stateStorageService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthenticationService"/> class.
@@ -24,18 +25,21 @@ public class AuthenticationService : IAuthenticationService
     /// <param name="stateService">Instance of the <see cref="IStateService"/> interface.</param>
     /// <param name="sdkClientSettings">Instance of the <see cref="SdkClientSettings"/>.</param>
     /// <param name="authenticationStateProvider">Instance of the <see cref="AuthenticationStateProvider"/>.</param>
+    /// <param name="stateStorageService">Instance of the <see cref="IStateStorageService"/> interface.</param>
     public AuthenticationService(
         IUserClient userClient,
         ISystemClient systemClient,
         IStateService stateService,
         SdkClientSettings sdkClientSettings,
-        JellyfinAuthStateProvider authenticationStateProvider)
+        JellyfinAuthStateProvider authenticationStateProvider,
+        IStateStorageService stateStorageService)
     {
         _userClient = userClient;
         _systemClient = systemClient;
         _stateService = stateService;
         _sdkClientSettings = sdkClientSettings;
         _authenticationStateProvider = authenticationStateProvider;
+        _stateStorageService = stateStorageService;
     }
 
     /// <inheritdoc />
@@ -68,8 +72,9 @@ public class AuthenticationService : IAuthenticationService
                     Pw = password
                 })
                 .ConfigureAwait(false);
-
             _stateService.SetAuthenticationResponse(host, authResult);
+            await _stateStorageService.SetStoredStateAsync(_stateService.GetState())
+                .ConfigureAwait(false);
             _authenticationStateProvider.StateChanged();
             return (true, null);
         }

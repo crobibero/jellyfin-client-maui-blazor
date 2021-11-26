@@ -47,6 +47,12 @@ public interface IStateService
     StateModel GetState();
 
     /// <summary>
+    /// Sets the current state.
+    /// </summary>
+    /// <param name="stateModel">The state model.</param>
+    void SetState(StateModel stateModel);
+
+    /// <summary>
     /// Clears the current state.
     /// </summary>
     void ClearState();

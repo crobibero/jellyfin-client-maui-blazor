@@ -28,6 +28,11 @@ public static class MauiProgram
 
         builder.Services.AddBlazorWebView();
         builder.Services.AddSharedServices();
-        return builder.Build();
+        var app = builder.Build();
+
+        app.Services.GetRequiredService<IAdditionalAssemblyService>()
+            .SetAssemblies(new[] { typeof(MauiProgram).Assembly });
+
+        return app;
     }
 }

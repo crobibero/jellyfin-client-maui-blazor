@@ -26,6 +26,9 @@ public partial class PrimaryCardComponent
     [Inject]
     private IStateService StateService { get; set; } = null!;
 
+    [Inject]
+    private IVideoNavigationService VideoNavigationService { get; set; } = null!;
+
     /// <inheritdoc />
     protected override Task OnInitializedAsync()
     {
@@ -53,5 +56,10 @@ public partial class PrimaryCardComponent
 
         InvokeAsync(() => StateHasChanged());
         return base.OnInitializedAsync();
+    }
+
+    private void Play()
+    {
+        VideoNavigationService.Navigate(Item.Id);
     }
 }

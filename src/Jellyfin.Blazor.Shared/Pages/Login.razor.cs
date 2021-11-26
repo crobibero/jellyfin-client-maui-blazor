@@ -14,16 +14,61 @@ public partial class Login
 {
     private readonly LoginPageModel _loginPageModel = new ();
     private bool _loading;
+    private bool _initializing = true;
     private string? _error;
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    private IStateService StateService { get; init; } = null!;
 
     [Inject]
-    private IAuthenticationService AuthenticationService { get; set; } = null!;
+    private IStateStorageService StateStorageService { get; init; } = null!;
 
     [Inject]
-    private ILogger<Login> Logger { get; set; } = null!;
+    private JellyfinAuthStateProvider AuthStateProvider { get; init; } = null!;
+
+    [Inject]
+    private NavigationManager NavigationManager { get; init; } = null!;
+
+    [Inject]
+    private IAuthenticationService AuthenticationService { get; init; } = null!;
+
+    [Inject]
+    private ILogger<Login> Logger { get; init; } = null!;
+
+    /// <inheritdoc />
+    protected override async Task OnInitializedAsync()
+    {
+        var currentToken = StateService.GetState().Token;
+        if (string.IsNullOrEmpty(currentToken))
+        {
+            var storedState = await StateStorageService.GetStoredStateAsync()
+                .ConfigureAwait(false);
+            if (storedState is not null)
+            {
+                StateService.SetState(storedState);
+                currentToken = storedState.Token;
+            }
+        }
+
+        if (!string.IsNullOrEmpty(currentToken))
+        {
+            var isAuthenticated = await AuthenticationService.IsAuthenticatedAsync()
+                .ConfigureAwait(false);
+            if (isAuthenticated)
+            {
+                AuthStateProvider.StateChanged();
+                NavigationManager.NavigateTo(string.Empty);
+            }
+            else
+            {
+                StateService.ClearState();
+                await StateStorageService.SetStoredStateAsync(null)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        _initializing = false;
+    }
 
     private async Task HandleLogin()
     {

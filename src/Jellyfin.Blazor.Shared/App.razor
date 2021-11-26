@@ -1,5 +1,8 @@
-﻿<CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(App).Assembly" PreferExactMatches="true">
+﻿@using Jellyfin.Blazor.Shared.Services
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly"
+            AdditionalAssemblies="@AdditionalAssemblyService.GetAssemblies()"
+            PreferExactMatches="true">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(EmptyLayout)">
                 <NotAuthorized>
@@ -26,3 +29,9 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code
+{
+    [Inject]
+    IAdditionalAssemblyService AdditionalAssemblyService { get; set; } = null!;
+}
