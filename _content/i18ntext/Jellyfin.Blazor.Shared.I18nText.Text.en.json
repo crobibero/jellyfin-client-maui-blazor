@@ -1,0 +1,8 @@
+{
+  "LoginButton": "Sign in",
+  "LoginHost": "Host",
+  "LoginHostPlaceholder": "https://jellyfin.domain.tld",
+  "LoginPassword": "Password",
+  "LoginUnknownError": "An unknown error occurred",
+  "LoginUsername": "Username"
+}
