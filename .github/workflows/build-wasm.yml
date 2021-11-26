@@ -1,0 +1,31 @@
+name: Build WASM
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup dotnet environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+          
+      - name: Setup node environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14 
+        
+      - name: Install node dependencies
+        run: npm ci --no-audit
+        working-directory: ./src/Jellyfin.Blazor.Shared
+        
+      - name: Build WASM
+        run: dotnet build --configuration Release
+        working-directory: ./src/Jellyfin.Blazor.Wasm

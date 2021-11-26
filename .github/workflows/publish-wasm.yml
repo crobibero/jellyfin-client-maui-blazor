@@ -1,9 +1,7 @@
-name: Build WASM
+name: Publish WASM
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
     branches: [ master ]
 
 jobs:
@@ -30,3 +28,13 @@ jobs:
         run: dotnet build --configuration Release
         working-directory: ./src/Jellyfin.Blazor.Wasm
 
+      - name: Publish WASM
+        run: dotnet publish --configuration Release -o dist --nologo
+        working-directory: ./src/Jellyfin.Blazor.Wasm
+
+      - name: Push to Github Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.7
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: ./src/Jellyfin.Blazor.Wasm/dist/wwwroot
