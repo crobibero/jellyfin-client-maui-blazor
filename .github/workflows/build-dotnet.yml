@@ -1,4 +1,4 @@
-name: Build
+name: Build WASM
 
 on:
   push:
@@ -21,15 +21,12 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: 14 
-
-      - name: Install dotnet dependencies
-        run: dotnet restore
         
       - name: Install node dependencies
         run: npm ci --no-audit
         working-directory: ./src/Jellyfin.Blazor.Shared
         
-      - name: Build Wasm
-        run: dotnet build --configuration Release --no-restore
+      - name: Build WASM
+        run: dotnet build --configuration Release
         working-directory: ./src/Jellyfin.Blazor.Wasm
 
