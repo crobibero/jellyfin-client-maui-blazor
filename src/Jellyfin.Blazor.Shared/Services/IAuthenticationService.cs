@@ -19,7 +19,8 @@ public interface IAuthenticationService
     /// <summary>
     /// Log out of current session.
     /// </summary>
-    void Logout();
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task LogoutAsync();
 
     /// <summary>
     /// Test whether client is currently authenticated.

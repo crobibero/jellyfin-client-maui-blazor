@@ -27,7 +27,7 @@ public partial class PrimaryCardComponent
     private IStateService StateService { get; set; } = null!;
 
     [Inject]
-    private IVideoNavigationService VideoNavigationService { get; set; } = null!;
+    private NavigationManager NavigationManager { get; set; } = null!;
 
     /// <inheritdoc />
     protected override Task OnInitializedAsync()
@@ -58,8 +58,25 @@ public partial class PrimaryCardComponent
         return base.OnInitializedAsync();
     }
 
-    private void Play()
+    private void ViewItem()
     {
-        VideoNavigationService.Navigate(Item.Id);
+        switch (Item.Type)
+        {
+            case BaseItemKind.Movie:
+                NavigationManager.NavigateTo($"/movie/{Item.Id}");
+                break;
+            case BaseItemKind.Episode:
+                NavigationManager.NavigateTo($"/episode/{Item.Id}");
+                break;
+            case BaseItemKind.Season:
+                NavigationManager.NavigateTo($"/season/{Item.Id}");
+                break;
+            case BaseItemKind.Series:
+                NavigationManager.NavigateTo($"/series/{Item.Id}");
+                break;
+            default:
+                NavigationManager.NavigateTo($"/item/{Item.Id}");
+                break;
+        }
     }
 }

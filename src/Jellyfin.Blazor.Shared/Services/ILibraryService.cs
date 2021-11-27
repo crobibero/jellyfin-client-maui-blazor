@@ -15,14 +15,21 @@ public interface ILibraryService
     /// Gets the list of visible libraries.
     /// </summary>
     /// <returns>The list of libraries.</returns>
-    Task<IReadOnlyList<BaseItemDto>> GetLibraries();
+    Task<IReadOnlyList<BaseItemDto>> GetLibrariesAsync();
 
     /// <summary>
     /// Gets the library by id.
     /// </summary>
     /// <param name="id">The library id.</param>
     /// <returns>The library.</returns>
-    Task<BaseItemDto?> GetLibrary(Guid id);
+    Task<BaseItemDto?> GetLibraryAsync(Guid id);
+
+    /// <summary>
+    /// Gets the item.
+    /// </summary>
+    /// <param name="id">The item id.</param>
+    /// <returns>The item.</returns>
+    Task<BaseItemDto?> GetItemAsync(Guid id);
 
     /// <summary>
     /// Gets the library items.
@@ -31,20 +38,20 @@ public interface ILibraryService
     /// <param name="limit">The count of items to return.</param>
     /// <param name="startIndex">The first item index.</param>
     /// <returns>The library items.</returns>
-    Task<BaseItemDtoQueryResult> GetLibraryItems(BaseItemDto library, int limit, int startIndex);
+    Task<BaseItemDtoQueryResult> GetLibraryItemsAsync(BaseItemDto library, int limit, int startIndex);
 
     /// <summary>
     /// Gets the next up items.
     /// </summary>
     /// <param name="libraryIds">The list of library ids.</param>
     /// <returns>The next up items.</returns>
-    Task<IReadOnlyList<BaseItemDto>> GetNextUp(IEnumerable<Guid> libraryIds);
+    Task<IReadOnlyList<BaseItemDto>> GetNextUpAsync(IEnumerable<Guid> libraryIds);
 
     /// <summary>
     /// Gets the continue watching items.
     /// </summary>
     /// <returns>The continue watching items.</returns>
-    Task<IReadOnlyList<BaseItemDto>> GetContinueWatching();
+    Task<IReadOnlyList<BaseItemDto>> GetContinueWatchingAsync();
 
     /// <summary>
     /// Gets the recently added items.
@@ -52,5 +59,5 @@ public interface ILibraryService
     /// <param name="libraryId">The library id.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The recently added library items.</returns>
-    Task<IReadOnlyList<BaseItemDto>> GetRecentlyAdded(Guid libraryId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<BaseItemDto>> GetRecentlyAddedAsync(Guid libraryId, CancellationToken cancellationToken = default);
 }

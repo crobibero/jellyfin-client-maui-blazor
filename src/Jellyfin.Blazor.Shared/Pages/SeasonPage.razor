@@ -1,0 +1,18 @@
+﻿@page "/season/{itemId:guid}"
+@layout MainLayout
+
+@if (Season is null)
+{
+    <LoadingComponent/>
+}
+else
+{
+    <span>
+        @Season.Name
+        @if (Season.ProductionYear is not null)
+        {
+            <span> - @Season.ProductionYear</span>
+        }
+    </span>
+}
+

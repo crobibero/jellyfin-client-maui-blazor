@@ -11,12 +11,18 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// <summary>
 /// The login page.
 /// </summary>
-public partial class Login
+public partial class LoginPage
 {
     private readonly LoginPageModel _loginPageModel = new ();
     private bool _loading;
     private bool _initializing = true;
     private string? _error;
+
+    /// <summary>
+    /// Gets or sets the optional return url.
+    /// </summary>
+    [Parameter]
+    public string? ReturnUrl { get; set; }
 
     [Inject]
     private IStateService StateService { get; init; } = null!;
@@ -34,7 +40,7 @@ public partial class Login
     private IAuthenticationService AuthenticationService { get; init; } = null!;
 
     [Inject]
-    private ILogger<Login> Logger { get; init; } = null!;
+    private ILogger<LoginPage> Logger { get; init; } = null!;
 
     [Inject]
     private Toolbelt.Blazor.I18nText.I18nText I18NText { get; init; } = null!;
@@ -64,7 +70,7 @@ public partial class Login
             if (isAuthenticated)
             {
                 AuthStateProvider.StateChanged();
-                NavigationManager.NavigateTo(string.Empty);
+                Navigate();
             }
             else
             {
@@ -89,7 +95,7 @@ public partial class Login
                 .ConfigureAwait(false);
             if (status)
             {
-                NavigationManager.NavigateTo(string.Empty);
+                Navigate();
             }
             else
             {
@@ -105,5 +111,24 @@ public partial class Login
         {
             _loading = false;
         }
+    }
+
+    private void Navigate()
+    {
+        // FIXME - this doesn't redirect properly.
+        var destinationUrl = "/";
+        if (!string.IsNullOrEmpty(ReturnUrl))
+        {
+            if (ReturnUrl[0] == '/')
+            {
+                destinationUrl += ReturnUrl[1..];
+            }
+            else
+            {
+                destinationUrl += ReturnUrl;
+            }
+        }
+
+        NavigationManager.NavigateTo(destinationUrl);
     }
 }

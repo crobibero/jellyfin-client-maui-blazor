@@ -41,7 +41,7 @@ public class LibraryService : ILibraryService
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyList<BaseItemDto>> GetLibraries()
+    public async Task<IReadOnlyList<BaseItemDto>> GetLibrariesAsync()
     {
         var views = await _userViewsClient.GetUserViewsAsync(_userId)
             .ConfigureAwait(false);
@@ -49,7 +49,7 @@ public class LibraryService : ILibraryService
     }
 
     /// <inheritdoc />
-    public async Task<BaseItemDto?> GetLibrary(Guid id)
+    public async Task<BaseItemDto?> GetLibraryAsync(Guid id)
     {
         var result = await _itemsClient.GetItemsAsync(
                 _userId,
@@ -59,7 +59,14 @@ public class LibraryService : ILibraryService
     }
 
     /// <inheritdoc />
-    public async Task<BaseItemDtoQueryResult> GetLibraryItems(
+    public async Task<BaseItemDto?> GetItemAsync(Guid id)
+    {
+        return await _userLibraryClient.GetItemAsync(_userId, id)
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<BaseItemDtoQueryResult> GetLibraryItemsAsync(
         BaseItemDto library,
         int limit,
         int startIndex)
@@ -79,7 +86,7 @@ public class LibraryService : ILibraryService
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyList<BaseItemDto>> GetNextUp(IEnumerable<Guid> libraryIds)
+    public async Task<IReadOnlyList<BaseItemDto>> GetNextUpAsync(IEnumerable<Guid> libraryIds)
     {
         var items = new List<BaseItemDto>();
         foreach (var library in libraryIds)
@@ -99,7 +106,7 @@ public class LibraryService : ILibraryService
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyList<BaseItemDto>> GetContinueWatching()
+    public async Task<IReadOnlyList<BaseItemDto>> GetContinueWatchingAsync()
     {
         var result = await _itemsClient.GetResumeItemsAsync(
                 _userId,
@@ -115,7 +122,7 @@ public class LibraryService : ILibraryService
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyList<BaseItemDto>> GetRecentlyAdded(Guid libraryId, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<BaseItemDto>> GetRecentlyAddedAsync(Guid libraryId, CancellationToken cancellationToken = default)
     {
         return await _userLibraryClient.GetLatestMediaAsync(
                 _userId,

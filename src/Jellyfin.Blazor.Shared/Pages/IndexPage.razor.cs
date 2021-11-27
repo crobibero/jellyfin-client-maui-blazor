@@ -12,7 +12,7 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// <summary>
 ///     The dashboard page.
 /// </summary>
-public partial class Index
+public partial class IndexPage
 {
     private readonly object _libraryLock = new ();
     private IReadOnlyList<BaseItemDto>? _continueWatching;
@@ -23,7 +23,7 @@ public partial class Index
     private ILibraryService LibraryService { get; set; } = null!;
 
     [Inject]
-    private ILogger<Index> Logger { get; set; } = null!;
+    private ILogger<IndexPage> Logger { get; set; } = null!;
 
     /// <inheritdoc />
     protected override void OnInitialized()
@@ -34,7 +34,7 @@ public partial class Index
 
     private void InitializeDashboard()
     {
-        LibraryService.GetContinueWatching()
+        LibraryService.GetContinueWatchingAsync()
             .ContinueWith(
                 task =>
                 {
@@ -45,7 +45,7 @@ public partial class Index
                     }
                 }, TaskScheduler.Default)
             .SafeFireAndForget();
-        LibraryService.GetLibraries()
+        LibraryService.GetLibrariesAsync()
             .ContinueWith(
                 task =>
                 {
@@ -74,7 +74,7 @@ public partial class Index
         Parallel.ForEachAsync(libraries, async (library, cancellationToken) =>
             {
                 var index = Array.IndexOf(libraryIds, library.Id);
-                var items = await LibraryService.GetRecentlyAdded(library.Id, cancellationToken)
+                var items = await LibraryService.GetRecentlyAddedAsync(library.Id, cancellationToken)
                     .ConfigureAwait(false);
                 lock (_libraryLock)
                 {
@@ -85,7 +85,7 @@ public partial class Index
             })
             .SafeFireAndForget();
 
-        LibraryService.GetNextUp(libraryIds)
+        LibraryService.GetNextUpAsync(libraryIds)
             .ContinueWith(
                 nextUp =>
                 {

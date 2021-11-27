@@ -11,7 +11,7 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// <summary>
 /// The library view.
 /// </summary>
-public partial class Library
+public partial class LibraryPage
 {
     private BaseItemDto? _library;
 
@@ -35,7 +35,7 @@ public partial class Library
     private NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
-    private ILogger<Library> Logger { get; set; } = null!;
+    private ILogger<LibraryPage> Logger { get; set; } = null!;
 
     /// <inheritdoc />
     protected override async Task OnParametersSetAsync()
@@ -49,7 +49,7 @@ public partial class Library
             _pageIndex = default;
             await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
 
-            _library = await LibraryService.GetLibrary(LibraryId)
+            _library = await LibraryService.GetLibraryAsync(LibraryId)
                 .ConfigureAwait(false);
             if (_library is null)
             {
@@ -89,7 +89,7 @@ public partial class Library
             return;
         }
 
-        var queryResult = await LibraryService.GetLibraryItems(
+        var queryResult = await LibraryService.GetLibraryItemsAsync(
                 _library,
                 _pageSize,
                 _pageIndex * _pageSize)

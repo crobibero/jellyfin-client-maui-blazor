@@ -1,0 +1,18 @@
+﻿@page "/item/{itemId:guid}"
+@layout MainLayout
+
+@if (Item is null)
+{
+    <LoadingComponent/>
+}
+else
+{
+    <span>
+        @Item.Name
+        @if (Item.ProductionYear is not null)
+        {
+            <span> - @Item.ProductionYear</span>
+        }
+    </span>
+}
+

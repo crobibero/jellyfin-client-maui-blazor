@@ -1,4 +1,5 @@
-﻿using Jellyfin.Blazor.Shared.Services;
+﻿using System.Threading.Tasks;
+using Jellyfin.Blazor.Shared.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace Jellyfin.Blazor.Shared.Pages;
@@ -6,7 +7,7 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// <summary>
 /// The logout page.
 /// </summary>
-public partial class Logout
+public partial class LogoutPage
 {
     [Inject]
     private NavigationManager NavigationManager { get; set; } = null!;
@@ -15,9 +16,9 @@ public partial class Logout
     private IAuthenticationService AuthenticationService { get; set; } = null!;
 
     /// <inheritdoc />
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        AuthenticationService.Logout();
+        await AuthenticationService.LogoutAsync().ConfigureAwait(false);
         NavigationManager.NavigateTo("/");
     }
 }

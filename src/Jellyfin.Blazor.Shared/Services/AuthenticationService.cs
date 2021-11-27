@@ -85,11 +85,12 @@ public class AuthenticationService : IAuthenticationService
     }
 
     /// <inheritdoc />
-    public void Logout()
+    public async Task LogoutAsync()
     {
         _sdkClientSettings.BaseUrl = null;
         _sdkClientSettings.AccessToken = null;
         _stateService.ClearState();
+        await _stateStorageService.SetStoredStateAsync(null).ConfigureAwait(false);
         _authenticationStateProvider.StateChanged();
     }
 

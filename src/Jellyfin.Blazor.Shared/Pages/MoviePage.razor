@@ -1,0 +1,18 @@
+﻿@page "/movie/{itemId:guid}"
+@layout MainLayout
+
+@if (Movie is null)
+{
+    <LoadingComponent/>
+}
+else
+{
+    <span>
+        @Movie.Name
+        @if (Movie.ProductionYear is not null)
+        {
+            <span> - @Movie.ProductionYear</span>
+        }
+    </span>
+}
+
