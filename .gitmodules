@@ -1,6 +1,0 @@
-[submodule "jellyfin-client-blazor"]
-	path = jellyfin-client-blazor
-	url = https://github.com/crobibero/jellyfin-client-blazor.git
-[submodule ".\\src\\jellyfin-client-blazor"]
-	path = .\\src\\jellyfin-client-blazor
-	url = https://github.com/crobibero/jellyfin-client-blazor.git
