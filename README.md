@@ -1,4 +1,7 @@
-﻿# Experimental Maui Jellyfin Client
+﻿# Experimental Maui-Blazor Jellyfin Client
 
+Published to Cloudflare Pages: 
+ - https://jellyfin-blazor.codyrobibero.dev
+ - https://jellyfin-client-maui-blazor.pages.dev 
 
-This will use the Blazor WASM code from https://github.com/crobibero/jellyfin-client-blazor
+[Cloudflare Build Script](Cloudflare.md)
