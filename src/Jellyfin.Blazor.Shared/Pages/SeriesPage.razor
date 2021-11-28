@@ -14,5 +14,24 @@ else
             <span> - @Series.ProductionYear</span>
         }
     </span>
+
+    <div>
+        @if (NextUp is not null)
+        {
+            <span>Next Up</span>
+            <PrimaryCardComponent Item="NextUp"/>
+        }
+    </div>
+
+    <div>
+        @if (Seasons.Count != 0)
+        {
+            <span>Seasons</span>
+            foreach (var season in Seasons)
+            {
+                <PrimaryCardComponent Item="season"/>
+            }
+        }
+    </div>
 }
 

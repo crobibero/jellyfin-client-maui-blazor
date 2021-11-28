@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Jellyfin.Blazor.Shared.Services;
@@ -23,6 +24,8 @@ public partial class SeasonPage
     private ILibraryService LibraryService { get; init; } = null!;
 
     private BaseItemDto? Season { get; set; }
+
+    private IReadOnlyList<BaseItemDto> Episodes { get; set; } = Array.Empty<BaseItemDto>();
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()

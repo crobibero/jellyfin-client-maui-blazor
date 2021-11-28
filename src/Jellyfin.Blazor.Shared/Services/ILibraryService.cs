@@ -60,4 +60,18 @@ public interface ILibraryService
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The recently added library items.</returns>
     Task<IReadOnlyList<BaseItemDto>> GetRecentlyAddedAsync(Guid libraryId, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets the seasons in a series.
+    /// </summary>
+    /// <param name="seriesId">The series id.</param>
+    /// <returns>The list of seasons.</returns>
+    Task<BaseItemDtoQueryResult> GetSeasonsAsync(Guid seriesId);
+
+    /// <summary>
+    /// Gets the next up item in a series.
+    /// </summary>
+    /// <param name="seriesId">The series id.</param>
+    /// <returns>The next episode.</returns>
+    Task<BaseItemDtoQueryResult> GetNextUpAsync(Guid seriesId);
 }

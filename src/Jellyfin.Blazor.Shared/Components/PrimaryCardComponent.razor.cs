@@ -46,7 +46,7 @@ public partial class PrimaryCardComponent
                 break;
             case BaseItemKind.Season:
                 _title = Item.SeriesName;
-                _subTitle = Item.SeasonName;
+                _subTitle = string.IsNullOrEmpty(Item.SeasonName) ? $"Season {Item.IndexNumber:D2}" : Item.SeasonName;
                 break;
             default:
                 _title = Item.Name;

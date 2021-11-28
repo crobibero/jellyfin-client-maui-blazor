@@ -72,7 +72,7 @@ public partial class MainLayout
     private void NavigateToView(Guid libraryId)
     {
         ShowSidebar = false;
-        _currentRoute = $"/view/{libraryId}";
+        _currentRoute = $"/library/{libraryId}";
         NavigationManager.NavigateTo(_currentRoute);
     }
 
