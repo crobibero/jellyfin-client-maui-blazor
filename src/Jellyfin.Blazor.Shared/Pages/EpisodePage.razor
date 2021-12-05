@@ -1,4 +1,4 @@
-﻿@page "/episode/{itemId:guid}"
+﻿@page "/series/{seriesId:guid}/season/{seasonId:guid}/episode/{episodeId:guid}"
 @layout MainLayout
 
 @if (Episode is null)
@@ -7,12 +7,14 @@
 }
 else
 {
-    <span>
-        @Episode.Name
-        @if (Episode.ProductionYear is not null)
-        {
-            <span> - @Episode.ProductionYear</span>
-        }
-    </span>
+    <div>
+        @Episode.SeriesName @(Episode.ProductionYear is null ? null : $"({Episode.ProductionYear})")
+    </div>
+    <div>
+        @($"S{Episode.ParentIndexNumber}E{Episode.IndexNumber} - {Episode.Name}")
+    </div>
+    <div>
+        @($"{Episode.PremiereDate:d}\t{Episode.RunTimeTicks}\t{DateTime.Now.AddTicks(Episode.RunTimeTicks ?? 0)}");
+    </div>
 }
 

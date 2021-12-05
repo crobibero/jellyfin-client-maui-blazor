@@ -31,34 +31,36 @@ public partial class SeriesPage
     private IReadOnlyList<BaseItemDto> Seasons { get; set; } = Array.Empty<BaseItemDto>();
 
     /// <inheritdoc />
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
+    {
+        GetSeriesAsync().SafeFireAndForget();
+        GetNextUpAsync().SafeFireAndForget();
+        GetSeasonsAsync().SafeFireAndForget();
+    }
+
+    private async Task GetSeriesAsync()
     {
         Series = await LibraryService.GetItemAsync(ItemId)
             .ConfigureAwait(false);
+        await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
+    }
 
-        LibraryService.GetNextUpAsync(ItemId)
-            .ContinueWith(
-                task =>
-                {
-                    if (task.IsCompletedSuccessfully
-                        && task.Result.TotalRecordCount == 1)
-                    {
-                        NextUp = task.Result.Items[0];
-                        InvokeAsync(() => StateHasChanged());
-                    }
-                }, TaskScheduler.Default)
-            .SafeFireAndForget();
+    private async Task GetNextUpAsync()
+    {
+        var nextUp = await LibraryService.GetNextUpAsync(ItemId)
+            .ConfigureAwait(false);
+        if (nextUp.Items.Count > 0)
+        {
+            NextUp = nextUp.Items[0];
+            await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
+        }
+    }
 
-        LibraryService.GetSeasonsAsync(ItemId)
-            .ContinueWith(
-                task =>
-                {
-                    if (task.IsCompletedSuccessfully)
-                    {
-                        Seasons = task.Result.Items;
-                        InvokeAsync(() => StateHasChanged());
-                    }
-                }, TaskScheduler.Default)
-            .SafeFireAndForget();
+    private async Task GetSeasonsAsync()
+    {
+        var seasons = await LibraryService.GetSeasonsAsync(ItemId)
+            .ConfigureAwait(false);
+        Seasons = seasons.Items;
+        await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
     }
 }

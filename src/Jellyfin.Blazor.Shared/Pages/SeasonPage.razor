@@ -1,4 +1,4 @@
-﻿@page "/season/{itemId:guid}"
+﻿@page "/series/{seriesId:guid}/season/{seasonId:guid}"
 @layout MainLayout
 
 @if (Season is null)
@@ -14,5 +14,16 @@ else
             <span> - @Season.ProductionYear</span>
         }
     </span>
+
+    <div>
+        @if (Episodes.Count != 0)
+        {
+            <span>Episodes</span>
+            foreach (var episode in Episodes)
+            {
+                <PrimaryCardComponent Item="episode"/>
+            }
+        }
+    </div>
 }
 

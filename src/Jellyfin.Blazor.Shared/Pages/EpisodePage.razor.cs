@@ -13,11 +13,25 @@ namespace Jellyfin.Blazor.Shared.Pages;
 public partial class EpisodePage
 {
     /// <summary>
-    /// Gets the item id.
+    /// Gets the series id.
     /// </summary>
     [Parameter]
     [Required]
-    public Guid ItemId { get; init; }
+    public Guid SeriesId { get; init; }
+
+    /// <summary>
+    /// Gets the season id.
+    /// </summary>
+    [Parameter]
+    [Required]
+    public Guid SeasonId { get; init; }
+
+    /// <summary>
+    /// Gets the episode id.
+    /// </summary>
+    [Parameter]
+    [Required]
+    public Guid EpisodeId { get; init; }
 
     [Inject]
     private ILibraryService LibraryService { get; init; } = null!;
@@ -27,7 +41,7 @@ public partial class EpisodePage
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        Episode = await LibraryService.GetItemAsync(ItemId)
+        Episode = await LibraryService.GetItemAsync(EpisodeId)
             .ConfigureAwait(false);
     }
 }

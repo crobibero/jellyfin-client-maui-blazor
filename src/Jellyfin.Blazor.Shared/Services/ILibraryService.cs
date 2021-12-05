@@ -69,6 +69,14 @@ public interface ILibraryService
     Task<BaseItemDtoQueryResult> GetSeasonsAsync(Guid seriesId);
 
     /// <summary>
+    /// Gets the episodes in a season.
+    /// </summary>
+    /// <param name="seriesId">The series id.</param>
+    /// <param name="seasonId">The season id.</param>
+    /// <returns>The list of episodes.</returns>
+    Task<BaseItemDtoQueryResult> GetEpisodesAsync(Guid seriesId, Guid seasonId);
+
+    /// <summary>
     /// Gets the next up item in a series.
     /// </summary>
     /// <param name="seriesId">The series id.</param>

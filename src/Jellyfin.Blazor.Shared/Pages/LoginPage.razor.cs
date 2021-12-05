@@ -13,7 +13,7 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// </summary>
 public partial class LoginPage
 {
-    private readonly LoginPageModel _loginPageModel = new ();
+    private readonly LoginPageModel _loginPageModel = new();
     private bool _loading;
     private bool _initializing = true;
     private string? _error;
@@ -34,7 +34,7 @@ public partial class LoginPage
     private JellyfinAuthStateProvider AuthStateProvider { get; init; } = null!;
 
     [Inject]
-    private NavigationManager NavigationManager { get; init; } = null!;
+    private INavigationService NavigationService { get; init; } = null!;
 
     [Inject]
     private IAuthenticationService AuthenticationService { get; init; } = null!;
@@ -115,6 +115,7 @@ public partial class LoginPage
 
     private void Navigate()
     {
+        /*
         // FIXME - this doesn't redirect properly.
         var destinationUrl = "/";
         if (!string.IsNullOrEmpty(ReturnUrl))
@@ -128,7 +129,8 @@ public partial class LoginPage
                 destinationUrl += ReturnUrl;
             }
         }
+        */
 
-        NavigationManager.NavigateTo(destinationUrl);
+        NavigationService.NavigateHome();
     }
 }

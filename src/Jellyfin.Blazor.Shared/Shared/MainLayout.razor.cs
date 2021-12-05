@@ -17,6 +17,7 @@ public partial class MainLayout
     private string _currentRoute = string.Empty;
     private BaseItemDtoQueryResult? _views;
     private bool _showSidebar;
+    private bool _canGoBack;
 
     /// <summary>
     /// Gets or sets a value indicating whether the sidebar should be shown.
@@ -50,11 +51,12 @@ public partial class MainLayout
     private IStateService StateService { get; set; } = null!;
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    private INavigationService NavigationService { get; set; } = null!;
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
+        NavigationService.OnNavigationChange += NavigationServiceOnOnNavigationChange;
         ShowSidebar = false;
         _views = await UserViewsClient.GetUserViewsAsync(StateService.GetUserId())
             .ConfigureAwait(false);
@@ -62,23 +64,32 @@ public partial class MainLayout
             .ConfigureAwait(false);
     }
 
+    private void NavigationServiceOnOnNavigationChange(object? sender, EventArgs e)
+    {
+        var canGoBack = NavigationService.CanGoBack();
+        if (canGoBack != _canGoBack)
+        {
+            _canGoBack = canGoBack;
+            InvokeAsync(() => StateHasChanged());
+        }
+    }
+
     private void NavigateToDashboard()
     {
         ShowSidebar = false;
+        NavigationService.NavigateHome();
         _currentRoute = string.Empty;
-        NavigationManager.NavigateTo(_currentRoute);
     }
 
     private void NavigateToView(Guid libraryId)
     {
         ShowSidebar = false;
-        _currentRoute = $"/library/{libraryId}";
-        NavigationManager.NavigateTo(_currentRoute);
+        _currentRoute = NavigationService.NavigateToLibrary(libraryId);
     }
 
     private void NavigateToLogout()
     {
         ShowSidebar = false;
-        NavigationManager.NavigateTo("/logout");
+        _currentRoute = NavigationService.NavigateToLogout();
     }
 }

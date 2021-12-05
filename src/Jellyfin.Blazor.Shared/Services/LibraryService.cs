@@ -148,6 +148,19 @@ public class LibraryService : ILibraryService
     }
 
     /// <inheritdoc />
+    public async Task<BaseItemDtoQueryResult> GetEpisodesAsync(Guid seriesId, Guid seasonId)
+    {
+        return await _tvShowsClient.GetEpisodesAsync(
+                seriesId,
+                _userId,
+                new[] { ItemFields.PrimaryImageAspectRatio },
+                seasonId: seasonId,
+                imageTypeLimit: 1,
+                enableImageTypes: new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Thumb })
+            .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
     public async Task<BaseItemDtoQueryResult> GetNextUpAsync(Guid seriesId)
     {
         return await _tvShowsClient.GetNextUpAsync(

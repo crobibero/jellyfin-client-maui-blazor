@@ -32,7 +32,7 @@ public partial class LibraryPage
     private ILibraryService LibraryService { get; set; } = null!;
 
     [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    private INavigationService NavigationService { get; set; } = null!;
 
     [Inject]
     private ILogger<LibraryPage> Logger { get; set; } = null!;
@@ -54,7 +54,7 @@ public partial class LibraryPage
             if (_library is null)
             {
                 // Library is null, redirect
-                NavigationManager.NavigateTo(string.Empty);
+                NavigationService.NavigateHome();
             }
 
             await base.OnParametersSetAsync()
@@ -73,7 +73,7 @@ public partial class LibraryPage
             if (_library is null)
             {
                 // Library is null, redirect to dashboard.
-                NavigationManager.NavigateTo(string.Empty);
+                NavigationService.NavigateHome();
             }
             else
             {

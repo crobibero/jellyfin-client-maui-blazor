@@ -10,7 +10,7 @@ namespace Jellyfin.Blazor.Shared.Pages;
 public partial class LogoutPage
 {
     [Inject]
-    private NavigationManager NavigationManager { get; set; } = null!;
+    private INavigationService NavigationService { get; set; } = null!;
 
     [Inject]
     private IAuthenticationService AuthenticationService { get; set; } = null!;
@@ -19,6 +19,6 @@ public partial class LogoutPage
     protected override async Task OnInitializedAsync()
     {
         await AuthenticationService.LogoutAsync().ConfigureAwait(false);
-        NavigationManager.NavigateTo("/");
+        NavigationService.NavigateHome();
     }
 }

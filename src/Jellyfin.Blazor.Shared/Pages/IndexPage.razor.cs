@@ -14,7 +14,7 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// </summary>
 public partial class IndexPage
 {
-    private readonly object _libraryLock = new ();
+    private readonly object _libraryLock = new();
     private IReadOnlyList<BaseItemDto>? _continueWatching;
     private (BaseItemDto, IReadOnlyList<BaseItemDto>?)[]? _libraries;
     private IReadOnlyList<BaseItemDto>? _nextUp;
@@ -28,37 +28,24 @@ public partial class IndexPage
     /// <inheritdoc />
     protected override void OnInitialized()
     {
-        InitializeDashboard();
+        InitializeContinueWatchingAsync().SafeFireAndForget();
+        InitializeLibrariesAsync().SafeFireAndForget();
         base.OnInitialized();
     }
 
-    private void InitializeDashboard()
+    private async Task InitializeContinueWatchingAsync()
     {
-        LibraryService.GetContinueWatchingAsync()
-            .ContinueWith(
-                task =>
-                {
-                    if (task.IsCompletedSuccessfully)
-                    {
-                        _continueWatching = task.Result;
-                        InvokeAsync(() => StateHasChanged());
-                    }
-                }, TaskScheduler.Default)
-            .SafeFireAndForget();
-        LibraryService.GetLibrariesAsync()
-            .ContinueWith(
-                task =>
-                {
-                    if (task.IsCompletedSuccessfully)
-                    {
-                        InitializeLibraries(task.Result);
-                    }
-                }, TaskScheduler.Default)
-            .SafeFireAndForget();
+        var continueWatching = await LibraryService.GetContinueWatchingAsync()
+            .ConfigureAwait(false);
+        _continueWatching = continueWatching;
+        await InvokeAsync(() => StateHasChanged())
+            .ConfigureAwait(false);
     }
 
-    private void InitializeLibraries(IReadOnlyList<BaseItemDto> libraries)
+    private async Task InitializeLibrariesAsync()
     {
+        var libraries = await LibraryService.GetLibrariesAsync().ConfigureAwait(false);
+
         var libraryIds = new Guid[libraries.Count];
         lock (_libraryLock)
         {
@@ -70,7 +57,9 @@ public partial class IndexPage
             }
         }
 
-        InvokeAsync(() => StateHasChanged());
+        await InvokeAsync(() => StateHasChanged())
+            .ConfigureAwait(false);
+
         Parallel.ForEachAsync(libraries, async (library, cancellationToken) =>
             {
                 var index = Array.IndexOf(libraryIds, library.Id);
@@ -85,16 +74,10 @@ public partial class IndexPage
             })
             .SafeFireAndForget();
 
-        LibraryService.GetNextUpAsync(libraryIds)
-            .ContinueWith(
-                nextUp =>
-                {
-                    if (nextUp.IsCompleted)
-                    {
-                        _nextUp = nextUp.Result;
-                        InvokeAsync(() => StateHasChanged());
-                    }
-                }, TaskScheduler.Default)
-            .SafeFireAndForget();
+        var nextUp = await LibraryService.GetNextUpAsync(libraryIds)
+            .ConfigureAwait(false);
+        _nextUp = nextUp;
+        await InvokeAsync(() => StateHasChanged())
+            .ConfigureAwait(false);
     }
 }
