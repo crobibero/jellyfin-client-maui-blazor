@@ -1,0 +1,41 @@
+name: Build Android
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-2022
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Setup node environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14 
+      
+      - name: Install Maui Workload
+        run: dotnet workload install maui
+        
+      - name: Install node dependencies
+        run: npm ci --no-audit
+        working-directory: ./src/Jellyfin.Blazor.Shared
+
+      - name: Build
+        working-directory: ./src/Jellyfin.Blazor.Maui
+        run: dotnet build -c Release -f net6.0-android
+
+      - name: Test
+        working-directory: ./src/Jellyfin.Blazor.Maui
+        run: dotnet test -c Release -f net6.0-android

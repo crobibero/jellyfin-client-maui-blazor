@@ -29,3 +29,7 @@ jobs:
       - name: Build WASM
         run: dotnet build --configuration Release
         working-directory: ./src/Jellyfin.Blazor.Wasm
+
+      - name: Test WASM
+        run: dotnet test --configuration Release
+        working-directory: ./src/Jellyfin.Blazor.Wasm
