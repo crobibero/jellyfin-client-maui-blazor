@@ -13,7 +13,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSharedServices();
 builder.Services.AddScoped<IVideoNavigationService, VideoNavigationService>();
-builder.Services.AddSingleton<IAdditionalAssemblyService, AdditionalAssemblyService>();
 builder.Services.AddScoped<IStateStorageService, StateStorageService>();
 builder.Services.AddBlazoredLocalStorage();
 

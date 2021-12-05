@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -26,6 +26,7 @@ public static class Extensions
         serviceCollection.AddAuthorizationCore();
         serviceCollection.AddScoped<JellyfinAuthStateProvider, JellyfinAuthStateProvider>();
         serviceCollection.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<JellyfinAuthStateProvider>());
+        serviceCollection.AddSingleton<IAdditionalAssemblyService, AdditionalAssemblyService>();
 
         serviceCollection.AddI18nText();
 
@@ -53,7 +54,7 @@ public static class Extensions
 
         var retryPolicy = HttpPolicyExtensions
             .HandleTransientHttpError()
-            .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(retryAttempt));
 
         // TODO remove unused services.
         serviceCollection

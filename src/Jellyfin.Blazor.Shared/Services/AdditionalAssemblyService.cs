@@ -1,15 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Jellyfin.Blazor.Shared.Services;
 
-namespace Jellyfin.Blazor.Maui.Services.Services;
+namespace Jellyfin.Blazor.Shared.Services;
 
 /// <inheritdoc />
 public class AdditionalAssemblyService : IAdditionalAssemblyService
 {
-    private Assembly[] _assemblies;
+    private Assembly[]? _assemblies;
 
     /// <inheritdoc />
     public void SetAssemblies(IEnumerable<Assembly> assemblies)
