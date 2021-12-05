@@ -27,7 +27,8 @@ public static class Extensions
         serviceCollection.AddScoped<JellyfinAuthStateProvider, JellyfinAuthStateProvider>();
         serviceCollection.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<JellyfinAuthStateProvider>());
         serviceCollection.AddSingleton<IAdditionalAssemblyService, AdditionalAssemblyService>();
-        serviceCollection.AddSingleton<INavigationService, NavigationService>();
+        serviceCollection.AddScoped<INavigationService, NavigationService>();
+        serviceCollection.AddSingleton<INavigationStateService, NavigationStateService>();
 
         serviceCollection.AddI18nText();
 

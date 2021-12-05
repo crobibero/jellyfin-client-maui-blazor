@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Jellyfin.Sdk;
 using Microsoft.AspNetCore.Components;
 
@@ -12,16 +11,19 @@ public class NavigationService : INavigationService
     private const string LogoutUrl = "/logout";
 
     private readonly NavigationManager _navigationManager;
-    private readonly Stack<string> _navigationHistory;
+    private readonly INavigationStateService _navigationStateService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NavigationService"/> class.
     /// </summary>
     /// <param name="navigationManager">Instance of the <see cref="NavigationManager"/>.</param>
-    public NavigationService(NavigationManager navigationManager)
+    /// <param name="navigationStateService">Instance of the <see cref="INavigationStateService"/> interface.</param>
+    public NavigationService(
+        NavigationManager navigationManager,
+        INavigationStateService navigationStateService)
     {
         _navigationManager = navigationManager;
-        _navigationHistory = new Stack<string>();
+        _navigationStateService = navigationStateService;
     }
 
     /// <inheritdoc />
@@ -31,8 +33,7 @@ public class NavigationService : INavigationService
     public string NavigateHome()
     {
         _navigationManager.NavigateTo(RootUrl);
-        _navigationHistory.Clear();
-        _navigationHistory.Push(RootUrl);
+        _navigationStateService.Root(RootUrl);
         OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return RootUrl;
     }
@@ -41,7 +42,7 @@ public class NavigationService : INavigationService
     public string NavigateToLibrary(Guid libraryId)
     {
         var destinationUrl = $"/library/{libraryId}";
-        _navigationHistory.Push(destinationUrl);
+        _navigationStateService.Push(destinationUrl);
         _navigationManager.NavigateTo(destinationUrl);
         OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return destinationUrl;
@@ -59,7 +60,7 @@ public class NavigationService : INavigationService
             _ => $"/item/{baseItemDto.Id}"
         };
 
-        _navigationHistory.Push(destinationUrl);
+        _navigationStateService.Push(destinationUrl);
         _navigationManager.NavigateTo(destinationUrl);
         OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return destinationUrl;
@@ -68,7 +69,7 @@ public class NavigationService : INavigationService
     /// <inheritdoc />
     public string NavigateToLogout()
     {
-        _navigationHistory.Clear();
+        _navigationStateService.Clear();
         _navigationManager.NavigateTo(LogoutUrl);
         OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return LogoutUrl;
@@ -77,21 +78,12 @@ public class NavigationService : INavigationService
     /// <inheritdoc />
     public string NavigateBack()
     {
-        if (CanGoBack())
-        {
-            // Pop current page.
-            _navigationHistory.Pop();
-
-            // Peek to get previous page.
-            var destinationUrl = _navigationHistory.Peek();
-            _navigationManager.NavigateTo(destinationUrl);
-            OnNavigationChange?.Invoke(this, EventArgs.Empty);
-            return destinationUrl;
-        }
-
-        throw new MethodAccessException("History is empty");
+        var destinationUrl = _navigationStateService.GoBack();
+        _navigationManager.NavigateTo(destinationUrl);
+        OnNavigationChange?.Invoke(this, EventArgs.Empty);
+        return destinationUrl;
     }
 
     /// <inheritdoc />
-    public bool CanGoBack() => _navigationHistory.Count > 1;
+    public bool CanGoBack() => _navigationStateService.CanGoBack();
 }
