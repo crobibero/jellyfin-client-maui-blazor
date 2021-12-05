@@ -7,19 +7,33 @@
 }
 else
 {
-    <span>
+    <PosterComponent ItemId="Series.Id"/>
+
+    <div>
         @Series.Name
         @if (Series.ProductionYear is not null)
         {
-            <span> - @Series.ProductionYear</span>
+            <div>@Series.ProductionYear</div>
         }
-    </span>
+    </div>
+
+    <div>
+        @Series.Overview
+    </div>
+
+    <div class="mt-6">
+        Favorite: @Series.UserData.IsFavorite
+        Watched: @Series.UserData.Played
+    </div>
 
     <div>
         @if (NextUp is not null)
         {
             <span>Next Up</span>
-            <PrimaryCardComponent Item="NextUp"/>
+
+            <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+                <NextUpCardComponent Item="NextUp"/>
+            </ul>
         }
     </div>
 
@@ -27,11 +41,12 @@ else
         @if (Seasons.Count != 0)
         {
             <span>Seasons</span>
-            foreach (var season in Seasons)
-            {
-                <PrimaryCardComponent Item="season"/>
-            }
+            <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+                @foreach (var season in Seasons)
+                {
+                    <PrimaryCardComponent Item="season" ShowParentName="false"/>
+                }
+            </ul>
         }
     </div>
 }
-

@@ -7,14 +7,27 @@
 }
 else
 {
+    <PosterComponent ItemId="Episode.Id"/>
+
     <div>
-        @Episode.SeriesName @(Episode.ProductionYear is null ? null : $"({Episode.ProductionYear})")
+        @Episode.SeriesName
     </div>
     <div>
-        @($"S{Episode.ParentIndexNumber}E{Episode.IndexNumber} - {Episode.Name}")
+        @($"Season {Episode.ParentIndexNumber} - {Episode.IndexNumber}. {Episode.Name}")
     </div>
     <div>
-        @($"{Episode.PremiereDate:d}\t{Episode.RunTimeTicks}\t{DateTime.Now.AddTicks(Episode.RunTimeTicks ?? 0)}");
+        <span>
+            @Episode.PremiereDate?.ToString("d", CultureInfo.CurrentCulture)
+        </span>
+        @if (Episode.RunTimeTicks is not null)
+        {
+            <span>
+                @TimeSpan.FromTicks(Episode.RunTimeTicks.Value).ToString(@"hh\:mm", CultureInfo.CurrentCulture)
+            </span>
+            <span>
+                Ends at @DateTime.Now.AddTicks(Episode.RunTimeTicks.Value).ToString("h:mm tt", CultureInfo.CurrentCulture)
+            </span>
+        }
     </div>
 }
 

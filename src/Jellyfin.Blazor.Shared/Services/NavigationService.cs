@@ -1,11 +1,12 @@
 ﻿using System;
 using Jellyfin.Sdk;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 
 namespace Jellyfin.Blazor.Shared.Services;
 
-/// <inheritdoc />
-public class NavigationService : INavigationService
+/// <inheritdoc cref="Jellyfin.Blazor.Shared.Services.INavigationService" />
+public class NavigationService : INavigationService, IDisposable
 {
     private const string RootUrl = "/";
     private const string LogoutUrl = "/logout";
@@ -24,6 +25,7 @@ public class NavigationService : INavigationService
     {
         _navigationManager = navigationManager;
         _navigationStateService = navigationStateService;
+        _navigationManager.LocationChanged += NavigationManagerOnLocationChanged;
     }
 
     /// <inheritdoc />
@@ -34,7 +36,6 @@ public class NavigationService : INavigationService
     {
         _navigationManager.NavigateTo(RootUrl);
         _navigationStateService.Root(RootUrl);
-        OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return RootUrl;
     }
 
@@ -44,7 +45,6 @@ public class NavigationService : INavigationService
         var destinationUrl = $"/library/{libraryId}";
         _navigationStateService.Push(destinationUrl);
         _navigationManager.NavigateTo(destinationUrl);
-        OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return destinationUrl;
     }
 
@@ -62,7 +62,6 @@ public class NavigationService : INavigationService
 
         _navigationStateService.Push(destinationUrl);
         _navigationManager.NavigateTo(destinationUrl);
-        OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return destinationUrl;
     }
 
@@ -71,7 +70,6 @@ public class NavigationService : INavigationService
     {
         _navigationStateService.Clear();
         _navigationManager.NavigateTo(LogoutUrl);
-        OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return LogoutUrl;
     }
 
@@ -80,10 +78,33 @@ public class NavigationService : INavigationService
     {
         var destinationUrl = _navigationStateService.GoBack();
         _navigationManager.NavigateTo(destinationUrl);
-        OnNavigationChange?.Invoke(this, EventArgs.Empty);
         return destinationUrl;
     }
 
     /// <inheritdoc />
     public bool CanGoBack() => _navigationStateService.CanGoBack();
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Dispose all resources.
+    /// </summary>
+    /// <param name="disposing">Whether to dispose.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            _navigationManager.LocationChanged -= NavigationManagerOnLocationChanged;
+        }
+    }
+
+    private void NavigationManagerOnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        OnNavigationChange?.Invoke(this, EventArgs.Empty);
+    }
 }

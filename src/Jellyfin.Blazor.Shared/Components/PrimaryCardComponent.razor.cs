@@ -23,6 +23,12 @@ public partial class PrimaryCardComponent
     [Required]
     public BaseItemDto Item { get; set; } = null!;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to display the parent name as the title.
+    /// </summary>
+    [Parameter]
+    public bool ShowParentName { get; set; } = true;
+
     [Inject]
     private IStateService StateService { get; set; } = null!;
 
@@ -33,10 +39,15 @@ public partial class PrimaryCardComponent
     protected override Task OnInitializedAsync()
     {
         var host = StateService.GetHost();
-        // Get parent instead of self if it exists.
-        var imageItemId = Item.SeriesId ?? Item.Id;
 
-        _imageUrl = $"{host}/Items/{imageItemId}/Images/{ImageType.Primary}?quality=90&maxWidth=960";
+        var imageItemId = Item.Id;
+        if (Item.Type == BaseItemKind.Episode)
+        {
+            // Get parent instead of self if it exists.
+            imageItemId = Item.SeriesId ?? Item.SeasonId ?? Item.Id;
+        }
+
+        _imageUrl = $"{host}/Items/{imageItemId}/Images/{ImageType.Primary}";
 
         switch (Item.Type)
         {
@@ -54,7 +65,6 @@ public partial class PrimaryCardComponent
                 break;
         }
 
-        InvokeAsync(() => StateHasChanged());
         return base.OnInitializedAsync();
     }
 

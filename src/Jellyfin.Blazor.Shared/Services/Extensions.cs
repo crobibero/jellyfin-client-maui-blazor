@@ -26,16 +26,16 @@ public static class Extensions
         serviceCollection.AddAuthorizationCore();
         serviceCollection.AddScoped<JellyfinAuthStateProvider, JellyfinAuthStateProvider>();
         serviceCollection.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<JellyfinAuthStateProvider>());
-        serviceCollection.AddSingleton<IAdditionalAssemblyService, AdditionalAssemblyService>();
-        serviceCollection.AddScoped<INavigationService, NavigationService>();
-        serviceCollection.AddSingleton<INavigationStateService, NavigationStateService>();
 
         serviceCollection.AddI18nText();
 
         // Register services
         serviceCollection.AddSingleton<IStateService, StateService>();
+        serviceCollection.AddSingleton<IAdditionalAssemblyService, AdditionalAssemblyService>();
+        serviceCollection.AddSingleton<INavigationStateService, NavigationStateService>();
         serviceCollection.AddScoped<IAuthenticationService, AuthenticationService>();
         serviceCollection.AddScoped<ILibraryService, LibraryService>();
+        serviceCollection.AddScoped<INavigationService, NavigationService>();
 
         // Register sdk services
         serviceCollection.AddSingleton<SdkClientSettings>();

@@ -1,21 +1,9 @@
 @inherits LayoutComponentBase
 <div class="h-screen flex overflow-hidden bg-gray-800 text-gray-100 cursor-default">
 <!-- Start Sidebar -->
-<!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-
 <TWTransitionalElement
     @bind-IsOpened="_showSidebar"
     AdditionalClasses="fixed inset-0 flex z-40 md:hidden">
-    <!--
-    Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-    Entering: "transition-opacity ease-linear duration-300"
-    From: "opacity-0"
-    To: "opacity-100"
-    Leaving: "transition-opacity ease-linear duration-300"
-    From: "opacity-100"
-    To: "opacity-0"
-    -->
     <TWTransitionalElement
         @bind-IsOpened="_showSidebar"
         Entering="transition-opacity ease-linear duration-300"
@@ -26,16 +14,6 @@
         LeavingTo="opacity-0"
         Duration="300"
         AdditionalClasses="fixed inset-0 bg-gray-600 bg-opacity-75"/>
-    <!--
-    Off-canvas menu, show/hide based on off-canvas menu state.
-
-    Entering: "transition ease-in-out duration-300 transform"
-    From: "-translate-x-full"
-    To: "translate-x-0"
-    Leaving: "transition ease-in-out duration-300 transform"
-    From: "translate-x-0"
-    To: "-translate-x-full"
-    -->
     <TWTransition
         Entering="transition ease-in-out duration-300 transform"
         EnteringFrom="-translate-x-full"
@@ -45,16 +23,6 @@
         LeavingTo="-translate-x-full"
         AdditionalClasses="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800"
         Duration="300">
-        <!--
-        Close button, show/hide based on off-canvas menu state.
-
-        Entering: "ease-in-out duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-        Leaving: "ease-in-out duration-300"
-        From: "opacity-100"
-        To: "opacity-0"
-        -->
         <TWTransition
             Entering="ease-in-out duration-300"
             EnteringFrom="opacity-0"
@@ -126,7 +94,6 @@
 <!-- Static sidebar for desktop -->
 <div class="hidden md:flex md:flex-shrink-0">
     <div class="flex flex-col w-64">
-        <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
             <div class="flex items-center flex-shrink-0 px-4">
                 <img class="h-8 w-auto" src="_content/Jellyfin.Blazor.Shared/images/jellyfin-banner-dark.svg" alt="Jellyfin">

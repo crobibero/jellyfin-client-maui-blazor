@@ -7,11 +7,13 @@
 }
 else
 {
+    <PosterComponent ItemId="Season.Id"/>
+
     <span>
         @Season.Name
         @if (Season.ProductionYear is not null)
         {
-            <span> - @Season.ProductionYear</span>
+            <div>@Season.ProductionYear</div>
         }
     </span>
 
@@ -19,10 +21,12 @@ else
         @if (Episodes.Count != 0)
         {
             <span>Episodes</span>
-            foreach (var episode in Episodes)
-            {
-                <PrimaryCardComponent Item="episode"/>
-            }
+            <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+                @foreach (var episode in Episodes)
+                {
+                    <NextUpCardComponent Item="episode"/>
+                }
+            </ul>
         }
     </div>
 }

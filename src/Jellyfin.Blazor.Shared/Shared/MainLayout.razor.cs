@@ -9,7 +9,7 @@ namespace Jellyfin.Blazor.Shared.Shared;
 /// <summary>
 /// The main layout.
 /// </summary>
-public partial class MainLayout
+public partial class MainLayout : LayoutComponentBase, IDisposable
 {
     private const string LinkCssClass = "hover:bg-indigo-600 group flex items-center px-2 py-2 text-sm font-medium rounded-md cursor-pointer";
     private const string IconCssClass = "mr-3 flex-shrink-0 h-6 w-6";
@@ -54,14 +54,38 @@ public partial class MainLayout
     private INavigationService NavigationService { get; set; } = null!;
 
     /// <inheritdoc />
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
-        NavigationService.OnNavigationChange += NavigationServiceOnOnNavigationChange;
         ShowSidebar = false;
         _views = await UserViewsClient.GetUserViewsAsync(StateService.GetUserId())
             .ConfigureAwait(false);
         await base.OnInitializedAsync()
             .ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    protected override void OnParametersSet()
+    {
+        NavigationService.OnNavigationChange += NavigationServiceOnOnNavigationChange;
+    }
+
+    /// <summary>
+    /// Dispose all resources.
+    /// </summary>
+    /// <param name="disposing">Whether to dispose.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            NavigationService.OnNavigationChange -= NavigationServiceOnOnNavigationChange;
+        }
     }
 
     private void NavigationServiceOnOnNavigationChange(object? sender, EventArgs e)
