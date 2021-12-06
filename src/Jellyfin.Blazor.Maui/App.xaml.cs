@@ -1,4 +1,4 @@
-﻿using Application = Microsoft.Maui.Controls.Application;
+using Application = Microsoft.Maui.Controls.Application;
 
 namespace Jellyfin.Blazor.Maui;
 
