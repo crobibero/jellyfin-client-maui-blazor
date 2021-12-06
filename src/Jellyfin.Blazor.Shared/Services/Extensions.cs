@@ -2,6 +2,9 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using Blazorise;
+using Blazorise.Bulma;
+using Blazorise.Icons.FontAwesome;
 using Jellyfin.Sdk;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +31,9 @@ public static class Extensions
         serviceCollection.AddScoped<AuthenticationStateProvider>(p => p.GetRequiredService<JellyfinAuthStateProvider>());
 
         serviceCollection.AddI18nText();
+        serviceCollection.AddBlazorise()
+            .AddBulmaProviders()
+            .AddFontAwesomeIcons();
 
         // Register services
         serviceCollection.AddSingleton<IStateService, StateService>();

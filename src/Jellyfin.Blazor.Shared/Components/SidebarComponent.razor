@@ -1,0 +1,71 @@
+﻿<Bar
+    @bind-Visible="_visible"
+    Breakpoint="Breakpoint.Desktop"
+    Mode="BarMode.VerticalInline"
+    CollapseMode="BarCollapseMode.Small"
+    Background="Background.Dark"
+    TextColor="TextColor.White"
+    Shadow="Shadow.Small"
+    ThemeContrast="ThemeContrast.Dark">
+    <BarToggler @onclick="ToggleVisibility"/>
+    <BarBrand Padding="Padding.Is4.OnAll">
+        <BarItem>
+            @*<BarIcon IconName="jellyfinIcon" Visibility="@(_visible ? Visibility.Invisible : Visibility.Visible)"/>*@
+            <Image Source="_content/Jellyfin.Blazor.Shared/images/jellyfin-banner-dark.svg"/>
+        </BarItem>
+    </BarBrand>
+    <BarMenu Padding="Padding.Is5.FromTop">
+        <BarStart Padding="Padding.Is2.FromLeft">
+            <BarItem @onclick="() => NavigateToDashboard()">
+                <BarLink>
+                    <BarIcon IconName="IconName.Home" Margin="Margin.Is3.FromRight"/>
+                    Dashboard
+                </BarLink>
+            </BarItem>
+
+            @if (_views is not null)
+            {
+                foreach (var view in _views.Items)
+                {
+                    IconName iconName;
+                    if (string.Equals(view.CollectionType, "movies", StringComparison.OrdinalIgnoreCase))
+                    {
+                        iconName = IconName.Film;
+                    }
+                    else if (string.Equals(view.CollectionType, "tvshows", StringComparison.OrdinalIgnoreCase))
+                    {
+                        iconName = IconName.Tv;
+                    }
+                    else if (string.Equals(view.CollectionType, "music", StringComparison.OrdinalIgnoreCase))
+                    {
+                        iconName = IconName.Music;
+                    }
+                    else
+                    {
+                        iconName = IconName.Folder;
+                    }
+
+                    <BarItem @onclick="() => NavigateToView(view.Id)">
+                        <BarLink>
+                            <BarIcon IconName="iconName" Margin="Margin.Is3.FromRight"/>
+                            @view.Name
+                        </BarLink>
+                    </BarItem>
+                }
+            }
+        </BarStart>
+        <BarEnd>
+            <BarItem @onclick="() => NavigateToLogout()">
+                <BarLink>
+                    <BarIcon IconName="IconName.Key" Margin="Margin.Is3.FromRight"/>
+                    Logout
+                </BarLink>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>
+
+@code
+{
+    RenderFragment jellyfinIcon = @<img src="_content/Jellyfin.Blazor.Shared/images/jellyfin-logo.svg" alt="Jellyfin Logo" style="width:32px; height: 32px"/>;
+}

@@ -1,7 +1,4 @@
-﻿@import "@mdi/font";
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+﻿@import "./main.css";
 
 /*! purgecss start ignore */
 @import "./site.css";

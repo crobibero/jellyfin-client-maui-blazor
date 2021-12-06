@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Jellyfin.Blazor.Shared.I18nText;
+using Blazorise;
 using Jellyfin.Blazor.Shared.PageModels;
 using Jellyfin.Blazor.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using Text = Jellyfin.Blazor.Shared.I18nText.Text;
 
 namespace Jellyfin.Blazor.Shared.Pages;
 
@@ -17,6 +18,7 @@ public partial class LoginPage
     private string? _error;
     private bool _initializing = true;
     private bool _loading;
+    private Validations? _validations;
 
     /// <summary>
     /// Gets or sets the optional return url.
@@ -88,6 +90,12 @@ public partial class LoginPage
         _loading = true;
         try
         {
+            var validateAll = await _validations!.ValidateAll().ConfigureAwait(false);
+            if (!validateAll)
+            {
+                return;
+            }
+
             var (status, errorMessage) = await AuthenticationService.AuthenticateAsync(
                     _loginPageModel.Host,
                     _loginPageModel.Username,

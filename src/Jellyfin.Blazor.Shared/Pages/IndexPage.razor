@@ -1,62 +1,73 @@
 @page "/"
 @layout MainLayout
 
-@if (_continueWatching?.Count != 0)
-{
-    <h2>Continue Watching</h2>
-    if (_continueWatching is null)
-    {
-        <LoadingComponent/>
-    }
-    else
-    {
-        <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
-            @foreach (var item in _continueWatching)
-            {
-                <PrimaryCardComponent Item="item"/>
-            }
-        </div>
-    }
-}
-
-@if (_nextUp?.Count != 0)
-{
-    <h2>Next Up</h2>
-    if (_nextUp is null)
-    {
-        <LoadingComponent/>
-    }
-    else
-    {
-        <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
-            @foreach (var item in _nextUp)
-            {
-                <PrimaryCardComponent Item="item"/>
-            }
-        </div>
-    }
-}
-
-@if (_libraries is not null && _libraries.Length != 0)
-{
-    foreach (var (library, items) in _libraries)
-    {
-        if (items?.Count != 0)
+<Row>
+    <Column ColumnSize="ColumnSize.Is12">
+        @if (_continueWatching is null)
         {
-            <h2>@library.Name</h2>
-            if (items is null)
-            {
-                <LoadingComponent/>
-            }
-            else
-            {
-                <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
-                    @foreach (var item in items)
+            <LoadingComponent/>
+        }
+        else if (_continueWatching.Count != 0)
+        {
+            <Row>
+                <Heading Size="HeadingSize.Is2">Continue Watching</Heading>
+            </Row>
+            <Row>
+                <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
+                    @foreach (var item in _continueWatching)
                     {
-                        <PrimaryCardComponent Item="@item"/>
+                        <PrimaryCardComponent Item="item"/>
                     }
-                </div>
+                </Column>
+            </Row>
+        }
+
+        @if (_nextUp is null)
+        {
+            <LoadingComponent/>
+        }
+        else if (_nextUp.Count != 0)
+        {
+            <Row>
+                <Heading Size="HeadingSize.Is2">Next Up</Heading>
+            </Row>
+            <Row>
+                <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
+                    @foreach (var item in _nextUp)
+                    {
+                        <PrimaryCardComponent Item="item"/>
+                    }
+                </Column>
+            </Row>
+        }
+
+        @if (_libraries is null)
+        {
+            <LoadingComponent/>
+        }
+        else if (_libraries.Length != 0)
+        {
+            foreach (var (library, items) in _libraries)
+            {
+                if (items is null)
+                {
+                    <LoadingComponent/>
+                }
+                else if (items.Count != 0)
+                {
+                    <Row>
+                        <Heading Size="HeadingSize.Is2">@library.Name</Heading>
+                    </Row>
+                    <Row>
+                        <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
+                            @foreach (var item in items)
+                            {
+                                <PrimaryCardComponent Item="item"/>
+                            }
+                        </Column>
+                    </Row>
+                }
             }
         }
-    }
-}
+    </Column>
+</Row>

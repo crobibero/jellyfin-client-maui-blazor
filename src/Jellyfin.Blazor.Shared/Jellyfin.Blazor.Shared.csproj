@@ -14,10 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AKSoftware.Blazor.TailwindTransition" Version="1.2.0" />
     <PackageReference Include="AsyncAwaitBestPractices" Version="6.0.4" />
     <PackageReference Include="Blazor.Extensions.Logging" Version="2.0.4" />
-    <PackageReference Include="BlazorPro.Spinkit" Version="1.2.0" />
+    <PackageReference Include="Blazorise.Bulma" Version="0.9.5.2" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.2" />
+    <PackageReference Include="Blazorise.Sidebar" Version="0.9.5.2" />
+    <PackageReference Include="Blazorise.SpinKit" Version="0.9.5.2" />
     <PackageReference Include="Jellyfin.Sdk" Version="2021.11.25-unstable.202111250135" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
@@ -32,16 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="i18ntext\text.en.json" />
+    <Content Include="i18ntext\*.json" />
   </ItemGroup>
 
   <Target Name="Build CSS" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
     <Exec Command="npm run build:prod" />
-  </Target>
-
-  <!-- dotnet build /t:DevCss -->
-  <Target Name="DevCss">
-    <Exec Command="npm run build:dev" />
   </Target>
 
 </Project>
