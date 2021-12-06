@@ -3,10 +3,10 @@
     <h3 class="mt-1 text-sm font-medium truncate text-center">@(ShowParentName ? _title : _subTitle)</h3>
     @if (ShowParentName)
     {
-        <dl class="mt-1 flex-grow flex flex-col justify-between">
-            <dd class="text-gray-500 text-sm truncate text-center">
+        <div class="mt-1 flex-grow flex flex-col justify-between">
+            <div class="text-gray-500 text-sm truncate text-center">
                 <span>@_subTitle</span>
-            </dd>
-        </dl>
+            </div>
+        </div>
     }
 </div>

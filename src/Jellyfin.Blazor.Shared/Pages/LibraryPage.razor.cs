@@ -13,14 +13,12 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// </summary>
 public partial class LibraryPage
 {
-    private BaseItemDto? _library;
-
+    private readonly int _pageSize = 100;
     private IReadOnlyList<BaseItemDto> _items = Array.Empty<BaseItemDto>();
-
+    private BaseItemDto? _library;
     private bool _loading = true;
-    private int _pageIndex;
     private int _pageCount;
-    private int _pageSize = 100;
+    private int _pageIndex;
 
     /// <summary>
     /// Gets or sets the library id.

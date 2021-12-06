@@ -35,9 +35,13 @@
     <Content Include="i18ntext\text.en.json" />
   </ItemGroup>
 
-  <Target Name="Build CSS" AfterTargets="PostBuildEvent">
-    <Exec Command="npm run build:prod" Condition="'$(Configuration)' == 'Release'" />
-    <Exec Command="npm run build:dev" Condition="'$(Configuration)' == 'Debug'" />
+  <Target Name="Build CSS" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="npm run build:prod" />
+  </Target>
+
+  <!-- dotnet build /t:DevCss -->
+  <Target Name="DevCss">
+    <Exec Command="npm run build:dev" />
   </Target>
 
 </Project>

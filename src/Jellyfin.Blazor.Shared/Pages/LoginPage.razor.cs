@@ -14,9 +14,9 @@ namespace Jellyfin.Blazor.Shared.Pages;
 public partial class LoginPage
 {
     private readonly LoginPageModel _loginPageModel = new();
-    private bool _loading;
-    private bool _initializing = true;
     private string? _error;
+    private bool _initializing = true;
+    private bool _loading;
 
     /// <summary>
     /// Gets or sets the optional return url.

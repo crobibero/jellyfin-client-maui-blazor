@@ -29,5 +29,22 @@ else
             </span>
         }
     </div>
-}
 
+    <div>
+        @Episode.Overview
+    </div>
+
+    if (Episode.Chapters.Count != 0)
+    {
+        <span>Episodes</span>
+        <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+            @foreach (var chapter in Episode.Chapters)
+            {
+                <span>@chapter.Name - @TimeSpan.FromTicks(chapter.StartPositionTicks).ToString(@"mm\:ss")</span>
+            }
+        </div>
+    }
+
+    <div>
+    </div>
+}

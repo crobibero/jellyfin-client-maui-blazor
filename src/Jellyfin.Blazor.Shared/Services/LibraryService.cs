@@ -12,11 +12,10 @@ namespace Jellyfin.Blazor.Shared.Services;
 public class LibraryService : ILibraryService
 {
     private readonly IItemsClient _itemsClient;
+    private readonly IStateService _stateService;
     private readonly ITvShowsClient _tvShowsClient;
     private readonly IUserLibraryClient _userLibraryClient;
     private readonly IUserViewsClient _userViewsClient;
-
-    private readonly Guid _userId;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LibraryService"/> class.
@@ -34,16 +33,17 @@ public class LibraryService : ILibraryService
         IUserViewsClient userViewsClient)
     {
         _itemsClient = itemsClient;
+        _stateService = stateService;
         _tvShowsClient = tvShowsClient;
         _userLibraryClient = userLibraryClient;
         _userViewsClient = userViewsClient;
-        _userId = stateService.GetUser().Id;
     }
 
     /// <inheritdoc />
     public async Task<IReadOnlyList<BaseItemDto>> GetLibrariesAsync()
     {
-        var views = await _userViewsClient.GetUserViewsAsync(_userId)
+        var userId = _stateService.GetUserId();
+        var views = await _userViewsClient.GetUserViewsAsync(userId)
             .ConfigureAwait(false);
         return views is null ? Array.Empty<BaseItemDto>() : views.Items;
     }
@@ -51,8 +51,9 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<BaseItemDto?> GetLibraryAsync(Guid id)
     {
+        var userId = _stateService.GetUserId();
         var result = await _itemsClient.GetItemsAsync(
-                _userId,
+                userId,
                 ids: new[] { id })
             .ConfigureAwait(false);
         return result.Items.Count == 0 ? null : result.Items[0];
@@ -61,7 +62,8 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<BaseItemDto?> GetItemAsync(Guid id)
     {
-        return await _userLibraryClient.GetItemAsync(_userId, id)
+        var userId = _stateService.GetUserId();
+        return await _userLibraryClient.GetItemAsync(userId, id)
             .ConfigureAwait(false);
     }
 
@@ -71,8 +73,9 @@ public class LibraryService : ILibraryService
         int limit,
         int startIndex)
     {
+        var userId = _stateService.GetUserId();
         return await _itemsClient.GetItemsAsync(
-                _userId,
+                userId,
                 recursive: true,
                 sortOrder: new[] { SortOrder.Ascending },
                 parentId: library.Id,
@@ -88,11 +91,12 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<IReadOnlyList<BaseItemDto>> GetNextUpAsync(IEnumerable<Guid> libraryIds)
     {
+        var userId = _stateService.GetUserId();
         var items = new List<BaseItemDto>();
         foreach (var library in libraryIds)
         {
             var result = await _tvShowsClient.GetNextUpAsync(
-                    _userId,
+                    userId,
                     limit: 24,
                     fields: new[] { ItemFields.PrimaryImageAspectRatio },
                     imageTypeLimit: 1,
@@ -108,8 +112,9 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<IReadOnlyList<BaseItemDto>> GetContinueWatchingAsync()
     {
+        var userId = _stateService.GetUserId();
         var result = await _itemsClient.GetResumeItemsAsync(
-                _userId,
+                userId,
                 limit: 24,
                 fields: new[] { ItemFields.PrimaryImageAspectRatio },
                 imageTypeLimit: 1,
@@ -124,8 +129,9 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<IReadOnlyList<BaseItemDto>> GetRecentlyAddedAsync(Guid libraryId, CancellationToken cancellationToken = default)
     {
+        var userId = _stateService.GetUserId();
         return await _userLibraryClient.GetLatestMediaAsync(
-                _userId,
+                userId,
                 limit: 24,
                 fields: new[] { ItemFields.PrimaryImageAspectRatio },
                 imageTypeLimit: 1,
@@ -138,9 +144,10 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<BaseItemDtoQueryResult> GetSeasonsAsync(Guid seriesId)
     {
+        var userId = _stateService.GetUserId();
         return await _tvShowsClient.GetSeasonsAsync(
                 seriesId,
-                _userId,
+                userId,
                 new[] { ItemFields.PrimaryImageAspectRatio },
                 imageTypeLimit: 1,
                 enableImageTypes: new[] { ImageType.Primary, ImageType.Backdrop, ImageType.Thumb })
@@ -150,9 +157,10 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<BaseItemDtoQueryResult> GetEpisodesAsync(Guid seriesId, Guid seasonId)
     {
+        var userId = _stateService.GetUserId();
         return await _tvShowsClient.GetEpisodesAsync(
                 seriesId,
-                _userId,
+                userId,
                 new[] { ItemFields.PrimaryImageAspectRatio },
                 seasonId: seasonId,
                 imageTypeLimit: 1,
@@ -163,8 +171,9 @@ public class LibraryService : ILibraryService
     /// <inheritdoc />
     public async Task<BaseItemDtoQueryResult> GetNextUpAsync(Guid seriesId)
     {
+        var userId = _stateService.GetUserId();
         return await _tvShowsClient.GetNextUpAsync(
-                _userId,
+                userId,
                 parentId: seriesId,
                 fields: new[] { ItemFields.PrimaryImageAspectRatio },
                 imageTypeLimit: 1,

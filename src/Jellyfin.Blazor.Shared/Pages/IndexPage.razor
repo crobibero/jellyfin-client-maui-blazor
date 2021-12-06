@@ -10,12 +10,12 @@
     }
     else
     {
-        <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+        <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
             @foreach (var item in _continueWatching)
             {
                 <PrimaryCardComponent Item="item"/>
             }
-        </ul>
+        </div>
     }
 }
 
@@ -28,12 +28,12 @@
     }
     else
     {
-        <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+        <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
             @foreach (var item in _nextUp)
             {
                 <PrimaryCardComponent Item="item"/>
             }
-        </ul>
+        </div>
     }
 }
 
@@ -50,12 +50,12 @@
             }
             else
             {
-                <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+                <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
                     @foreach (var item in items)
                     {
                         <PrimaryCardComponent Item="@item"/>
                     }
-                </ul>
+                </div>
             }
         }
     }

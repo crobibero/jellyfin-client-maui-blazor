@@ -31,9 +31,9 @@ else
         {
             <span>Next Up</span>
 
-            <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
                 <NextUpCardComponent Item="NextUp"/>
-            </ul>
+            </div>
         }
     </div>
 
@@ -41,12 +41,12 @@ else
         @if (Seasons.Count != 0)
         {
             <span>Seasons</span>
-            <ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
                 @foreach (var season in Seasons)
                 {
                     <PrimaryCardComponent Item="season" ShowParentName="false"/>
                 }
-            </ul>
+            </div>
         }
     </div>
 }
