@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Blazored.LocalStorage;
 using Jellyfin.Blazor.Shared.Models;
 using Jellyfin.Blazor.Shared.Services;
@@ -21,7 +21,7 @@ public class StateStorageService : IStateStorageService
     }
 
     /// <inheritdoc />
-    public async Task<StateModel?> GetStoredStateAsync()
+    public async ValueTask<StateModel?> GetStoredStateAsync()
     {
         try
         {
@@ -35,7 +35,7 @@ public class StateStorageService : IStateStorageService
     }
 
     /// <inheritdoc />
-    public async Task SetStoredStateAsync(StateModel? stateModel)
+    public async ValueTask SetStoredStateAsync(StateModel? stateModel)
     {
         if (stateModel is null)
         {

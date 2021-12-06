@@ -1,28 +1,49 @@
+using System.Text.Json;
 using System.Threading.Tasks;
 using Jellyfin.Blazor.Shared.Models;
 using Jellyfin.Blazor.Shared.Services;
+using Microsoft.Maui.Essentials;
 
 namespace Jellyfin.Blazor.Maui.Services;
 
 /// <inheritdoc />
 public class StateStorageService : IStateStorageService
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="StateStorageService"/> class.
-    /// </summary>
-    public StateStorageService()
+    private const string StateKey = "jellyfin.state";
+
+    /// <inheritdoc />
+    public async ValueTask<StateModel?> GetStoredStateAsync()
     {
+        try
+        {
+            var storedState = await SecureStorage.GetAsync(StateKey)
+                .ConfigureAwait(false);
+
+            if (string.IsNullOrEmpty(storedState))
+            {
+                return null;
+            }
+
+            return JsonSerializer.Deserialize<StateModel>(storedState);
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     /// <inheritdoc />
-    public Task<StateModel?> GetStoredStateAsync()
+    public async ValueTask SetStoredStateAsync(StateModel? stateModel)
     {
-        return Task.FromResult<StateModel?>(null);
-    }
-
-    /// <inheritdoc />
-    public Task SetStoredStateAsync(StateModel? stateModel)
-    {
-        return Task.CompletedTask;
+        if (stateModel is null)
+        {
+            SecureStorage.Remove(StateKey);
+        }
+        else
+        {
+            var stateString = JsonSerializer.Serialize(stateModel);
+            await SecureStorage.SetAsync(StateKey, stateString)
+                .ConfigureAwait(false);
+        }
     }
 }
