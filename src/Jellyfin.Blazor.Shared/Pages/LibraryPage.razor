@@ -1,7 +1,9 @@
 ﻿@page "/library/{libraryId:guid}"
 @layout MainLayout
 
-<h1>@_library?.Name</h1>
+<Heading Size="HeadingSize.Is1">
+    @_library?.Name
+</Heading>
 
 @if (_loading)
 {
@@ -9,15 +11,15 @@
 }
 else
 {
-    <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        @foreach (var item in _items)
-        {
+    foreach (var item in _items)
+    {
+        <Column ColumnSize="ColumnSize.Is2.Is3.OnTablet.Is4.OnWidescreen.Is6.OnFullHD">
             <PrimaryCardComponent Item="item"/>
-        }
-    </div>
-}
+        </Column>
+    }
 
-<PagerComponent
-    CurrentPage="@_pageIndex"
-    PageCount="@_pageCount"
-    OnPageChanged="@OnPageChangedAsync"/>
+    <PagerComponent
+        CurrentPage="@_pageIndex"
+        PageCount="@_pageCount"
+        OnPageChanged="@OnPageChangedAsync"/>
+}

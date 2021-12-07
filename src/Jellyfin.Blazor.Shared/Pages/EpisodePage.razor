@@ -9,42 +9,41 @@ else
 {
     <PosterComponent ItemId="Episode.Id"/>
 
-    <div>
+    <Div>
         @Episode.SeriesName
-    </div>
-    <div>
+    </Div>
+    <Div>
         @($"Season {Episode.ParentIndexNumber} - {Episode.IndexNumber}. {Episode.Name}")
-    </div>
-    <div>
-        <span>
+    </Div>
+    <Div>
+        <Span>
             @Episode.PremiereDate?.ToString("d", CultureInfo.CurrentCulture)
-        </span>
+        </Span>
         @if (Episode.RunTimeTicks is not null)
         {
-            <span>
+            <Span>
                 @TimeSpan.FromTicks(Episode.RunTimeTicks.Value).ToString(@"hh\:mm", CultureInfo.CurrentCulture)
-            </span>
-            <span>
+            </Span>
+            <Span>
                 Ends at @DateTime.Now.AddTicks(Episode.RunTimeTicks.Value).ToString("h:mm tt", CultureInfo.CurrentCulture)
-            </span>
+            </Span>
         }
-    </div>
+    </Div>
 
-    <div>
+    <Div>
         @Episode.Overview
-    </div>
+    </Div>
 
     if (Episode.Chapters.Count != 0)
     {
-        <span>Episodes</span>
-        <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+        <Heading Size="HeadingSize.Is5">Chapters</Heading>
+        <Row>
             @foreach (var chapter in Episode.Chapters)
             {
-                <span>@chapter.Name - @TimeSpan.FromTicks(chapter.StartPositionTicks).ToString(@"mm\:ss")</span>
+                <Span>
+                    @chapter.Name - @TimeSpan.FromTicks(chapter.StartPositionTicks).ToString(@"mm\:ss")
+                </Span>
             }
-        </div>
+        </Row>
     }
-
-    <div>
-    </div>
 }
