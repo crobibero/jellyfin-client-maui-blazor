@@ -12,7 +12,7 @@ namespace Jellyfin.Blazor.Shared.Pages;
 /// <summary>
 ///     The dashboard page.
 /// </summary>
-public partial class IndexPage
+public partial class HomePage
 {
     private readonly object _libraryLock = new();
     private IReadOnlyList<BaseItemDto>? _continueWatching;
@@ -23,7 +23,7 @@ public partial class IndexPage
     private ILibraryService LibraryService { get; set; } = null!;
 
     [Inject]
-    private ILogger<IndexPage> Logger { get; set; } = null!;
+    private ILogger<HomePage> Logger { get; set; } = null!;
 
     /// <inheritdoc />
     protected override void OnInitialized()

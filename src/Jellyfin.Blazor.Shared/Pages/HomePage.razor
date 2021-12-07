@@ -2,7 +2,7 @@
 @layout MainLayout
 
 <Row>
-    <Column ColumnSize="ColumnSize.Is12">
+    <Column>
         @if (_continueWatching is null)
         {
             <LoadingComponent/>
@@ -10,15 +10,18 @@
         else if (_continueWatching.Count != 0)
         {
             <Row>
-                <Heading Size="HeadingSize.Is2">Continue Watching</Heading>
+                <Heading Size="HeadingSize.Is2" TextColor="TextColor.White50">
+                    Continue Watching
+                </Heading>
             </Row>
             <Row>
-                <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
-                    @foreach (var item in _continueWatching)
-                    {
+                @foreach (var item in _continueWatching)
+                {
+                    <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
                         <PrimaryCardComponent Item="item"/>
-                    }
-                </Column>
+                    </Column>
+                }
+
             </Row>
         }
 
@@ -29,15 +32,17 @@
         else if (_nextUp.Count != 0)
         {
             <Row>
-                <Heading Size="HeadingSize.Is2">Next Up</Heading>
+                <Heading Size="HeadingSize.Is2" TextColor="TextColor.White">
+                    Next Up
+                </Heading>
             </Row>
             <Row>
-                <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
-                    @foreach (var item in _nextUp)
-                    {
+                @foreach (var item in _nextUp)
+                {
+                    <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
                         <PrimaryCardComponent Item="item"/>
-                    }
-                </Column>
+                    </Column>
+                }
             </Row>
         }
 
@@ -56,15 +61,17 @@
                 else if (items.Count != 0)
                 {
                     <Row>
-                        <Heading Size="HeadingSize.Is2">@library.Name</Heading>
+                        <Heading Size="HeadingSize.Is2" TextColor="TextColor.White">
+                            @library.Name
+                        </Heading>
                     </Row>
                     <Row>
-                        <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
-                            @foreach (var item in items)
-                            {
+                        @foreach (var item in items)
+                        {
+                            <Column ColumnSize="ColumnSize.Is3.OnMobile.Is4.OnTablet.Is6.OnWidescreen">
                                 <PrimaryCardComponent Item="item"/>
-                            }
-                        </Column>
+                            </Column>
+                        }
                     </Row>
                 }
             }

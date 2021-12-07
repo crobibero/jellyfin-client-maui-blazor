@@ -20,6 +20,7 @@ else
                                 <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">@Text.LoginHost</FieldLabel>
                                 <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
                                     <TextEdit
+                                        Role="TextRole.Url"
                                         Placeholder="@Text.LoginHostPlaceholder"
                                         @bind-Text="@_loginPageModel.Host">
                                         <Feedback>
@@ -34,6 +35,7 @@ else
                                 <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">@Text.LoginUsername</FieldLabel>
                                 <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
                                     <TextEdit
+                                        Role="TextRole.Text"
                                         Placeholder="@Text.LoginUsername"
                                         @bind-Text="@_loginPageModel.Username">
                                         <Feedback>
@@ -47,6 +49,7 @@ else
                             <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is2.OnDesktop">@Text.LoginPassword</FieldLabel>
                             <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is10.OnDesktop">
                                 <TextEdit
+                                    Role="TextRole.Password"
                                     Placeholder="@Text.LoginPassword"
                                     @bind-Text="@_loginPageModel.Password"/>
                             </FieldBody>
