@@ -9,44 +9,44 @@ else
 {
     <PosterComponent ItemId="Series.Id"/>
 
-    <div>
+    <Div>
         @Series.Name
         @if (Series.ProductionYear is not null)
         {
-            <div>@Series.ProductionYear</div>
+            <Div>@Series.ProductionYear</Div>
         }
-    </div>
+    </Div>
 
-    <div>
+    <Div>
         @Series.Overview
-    </div>
+    </Div>
 
-    <div class="mt-6">
+    <Div Margin="Margin.Is5.FromTop">
         Favorite: @Series.UserData.IsFavorite
         Watched: @Series.UserData.Played
-    </div>
+    </Div>
 
-    <div>
+    <Div>
         @if (NextUp is not null)
         {
-            <span>Next Up</span>
+            <Span>Next Up</Span>
 
-            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
+            <Column ColumnSize="ColumnSize.Is2.Is3.OnTablet.Is4.OnWidescreen.Is6.OnFullHD">
                 <NextUpCardComponent Item="NextUp"/>
-            </div>
+            </Column>
         }
-    </div>
+    </Div>
 
-    <div>
+    <Div>
         @if (Seasons.Count != 0)
         {
-            <span>Seasons</span>
-            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
-                @foreach (var season in Seasons)
-                {
+            <Span>Seasons</Span>
+            foreach (var season in Seasons)
+            {
+                <Column ColumnSize="ColumnSize.Is2.Is3.OnTablet.Is4.OnWidescreen.Is6.OnFullHD">
                     <PrimaryCardComponent Item="season" ShowParentName="false"/>
-                }
-            </div>
+                </Column>
+            }
         }
-    </div>
+    </Div>
 }

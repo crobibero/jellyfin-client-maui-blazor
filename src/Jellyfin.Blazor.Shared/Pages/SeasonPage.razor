@@ -9,24 +9,24 @@ else
 {
     <PosterComponent ItemId="Season.Id"/>
 
-    <span>
+    <Span>
         @Season.Name
         @if (Season.ProductionYear is not null)
         {
-            <div>@Season.ProductionYear</div>
+            <Div>@Season.ProductionYear</Div>
         }
-    </span>
+    </Span>
 
-    <div>
+    <Row>
         @if (Episodes.Count != 0)
         {
-            <span>Episodes</span>
-            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-10 2xl:grid-cols-12">
-                @foreach (var episode in Episodes)
-                {
+            <Span>Episodes</Span>
+            foreach (var episode in Episodes)
+            {
+                <Column ColumnSize="ColumnSize.Is2.Is3.OnTablet.Is4.OnWidescreen.Is6.OnFullHD">
                     <NextUpCardComponent Item="episode"/>
-                }
-            </div>
+                </Column>
+            }
         }
-    </div>
+    </Row>
 }
