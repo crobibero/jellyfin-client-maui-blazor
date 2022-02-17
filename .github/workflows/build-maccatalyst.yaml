@@ -30,7 +30,7 @@ jobs:
           node-version: 14 
       
       - name: Install Maui Workload
-        run: dotnet workload install maui
+        run: dotnet workload install net6.0-maccatalyst
 
       - name: Install node dependencies
         run: npm ci --no-audit
