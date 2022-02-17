@@ -351,11 +351,6 @@ public static class Extensions
             .AddPolicyHandler(retryPolicy);
 
         serviceCollection
-            .AddHttpClient<IVideoHlsClient, VideoHlsClient>()
-            .ConfigurePrimaryHttpMessageHandler(DefaultHttpClientHandlerDelegate)
-            .AddPolicyHandler(retryPolicy);
-
-        serviceCollection
             .AddHttpClient<IVideosClient, VideosClient>()
             .ConfigurePrimaryHttpMessageHandler(DefaultHttpClientHandlerDelegate)
             .AddPolicyHandler(retryPolicy);

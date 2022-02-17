@@ -27,6 +27,11 @@ public static class MauiProgram
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("Quicksand-Bold.ttf", "QuicksandBold");
+                fonts.AddFont("Quicksand-Light.ttf", "QuicksandLight");
+                fonts.AddFont("Quicksand-Medium.ttf", "QuicksandMedium");
+                fonts.AddFont("Quicksand-Regular.ttf", "QuicksandRegular");
+                fonts.AddFont("Quicksand-SemiBold.ttf", "QuicksandSemiBold");
             });
 
         builder.Services.AddBlazorWebView();
