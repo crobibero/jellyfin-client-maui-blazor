@@ -1,4 +1,4 @@
-﻿<Bar
+<Bar
     @bind-Visible="_visible"
     Breakpoint="Breakpoint.Desktop"
     Mode="BarMode.VerticalInline"
@@ -15,10 +15,10 @@
         </BarItem>
     </BarBrand>
     <BarMenu Padding="Padding.Is5.FromTop">
-        <BarStart Padding="Padding.Is2.FromLeft">
+        <BarStart Padding="Padding.Is2.FromStart">
             <BarItem @onclick="() => NavigateToDashboard()">
                 <BarLink>
-                    <BarIcon IconName="IconName.Home" Margin="Margin.Is3.FromRight"/>
+                    <BarIcon IconName="IconName.Home" Margin="Margin.Is3.FromEnd"/>
                     Dashboard
                 </BarLink>
             </BarItem>
@@ -47,7 +47,7 @@
 
                     <BarItem @onclick="() => NavigateToView(view.Id)">
                         <BarLink>
-                            <BarIcon IconName="iconName" Margin="Margin.Is3.FromRight"/>
+                            <BarIcon IconName="iconName" Margin="Margin.Is3.FromEnd"/>
                             @view.Name
                         </BarLink>
                     </BarItem>
@@ -57,7 +57,7 @@
         <BarEnd>
             <BarItem @onclick="() => NavigateToLogout()">
                 <BarLink>
-                    <BarIcon IconName="IconName.Key" Margin="Margin.Is3.FromRight"/>
+                    <BarIcon IconName="IconName.Key" Margin="Margin.Is3.FromEnd"/>
                     Logout
                 </BarLink>
             </BarItem>

@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Jellyfin.Blazor.Shared.Models;
 using Jellyfin.Blazor.Shared.Services;
-using Microsoft.Maui.Essentials;
+using Microsoft.Maui.Storage;
 
 namespace Jellyfin.Blazor.Maui.Services;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Jellyfin.Sdk;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
@@ -32,7 +32,6 @@ namespace Jellyfin.Blazor.Maui.WinUI
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-            Microsoft.Maui.Essentials.Platform.OnLaunched(args);
 
             var version = typeof(MauiProgram).Assembly.GetName().Version?.ToString() ?? "0.0.0.1";
             Services.GetRequiredService<SdkClientSettings>()
