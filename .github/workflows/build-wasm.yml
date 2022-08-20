@@ -10,15 +10,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2
 
       - name: Setup dotnet environment
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@608ee757cfcce72c2e91e99aca128e0cae67de87 # tag=v1
         with:
           dotnet-version: 6.0.x
           
       - name: Setup node environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@46071b5c7a2e0c34e49c3cb8a0e792e86e18d5ea # tag=v2.1.5
         with:
           node-version: 14 
         
