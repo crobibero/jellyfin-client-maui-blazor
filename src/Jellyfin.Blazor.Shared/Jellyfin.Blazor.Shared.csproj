@@ -18,7 +18,7 @@
     <PackageReference Include="AsyncAwaitBestPractices" Version="6.0.5" />
     <PackageReference Include="Blazor.Extensions.Logging" Version="2.0.4" />
     <PackageReference Include="BlazorPro.Spinkit" Version="1.2.0" />
-    <PackageReference Include="Jellyfin.Sdk" Version="2021.11.25-unstable.202111250135" />
+    <PackageReference Include="Jellyfin.Sdk" Version="2022.6.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all" />
