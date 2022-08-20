@@ -1,21 +1,15 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Runtime;
-using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
 
-namespace Jellyfin.Blazor.Maui;
+namespace maui_blazor;
 
 [Application]
 public class MainApplication : MauiApplication
 {
-    public MainApplication(IntPtr handle, JniHandleOwnership ownership)
-        : base(handle, ownership)
-    {
-    }
+	public MainApplication(IntPtr handle, JniHandleOwnership ownership)
+		: base(handle, ownership)
+	{
+	}
 
-    protected override MauiApp CreateMauiApp()
-    {
-        return MauiProgram.CreateMauiApp();
-    }
+	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
