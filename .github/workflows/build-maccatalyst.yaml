@@ -37,7 +37,7 @@ jobs:
           echo "::set-output name=APP_VERSION::$ver"
 
       - name: Install Maui Workload
-        run: dotnet workload install maui-maccatalyst
+        run: dotnet workload install maui
 
       - name: Install node dependencies
         run: npm ci --no-audit
