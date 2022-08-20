@@ -2,7 +2,6 @@ using System;
 using Jellyfin.Blazor.Maui.Services;
 using Jellyfin.Blazor.Shared.Services;
 using Jellyfin.Sdk;
-using Microsoft.AspNetCore.Components.WebView.Maui;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
@@ -22,7 +21,6 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .RegisterBlazorMauiWebView()
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>
             {
@@ -30,6 +28,11 @@ public static class MauiProgram
             });
 
         builder.Services.AddBlazorWebView();
+
+#if DEBUG
+        builder.Services.AddBlazorWebViewDeveloperTools();
+#endif
+
         builder.Services.AddSharedServices();
 
         builder.Services.AddScoped<IVideoNavigationService, VideoNavigationService>();
