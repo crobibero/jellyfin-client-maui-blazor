@@ -23,10 +23,10 @@ jobs:
       - name: Setup node environment
         uses: actions/setup-node@46071b5c7a2e0c34e49c3cb8a0e792e86e18d5ea # tag=v2.1.5
         with:
-          node-version: 14 
+          node-version: 16 
       
       - name: Install Maui Workload
-        run: dotnet workload install maui
+        run: dotnet workload install maui-android
         
       - name: Install node dependencies
         run: npm ci --no-audit
@@ -35,7 +35,3 @@ jobs:
       - name: Build
         working-directory: ./src/Jellyfin.Blazor.Maui
         run: dotnet build -c Release -f net6.0-android
-
-      - name: Test
-        working-directory: ./src/Jellyfin.Blazor.Maui
-        run: dotnet test -c Release -f net6.0-android

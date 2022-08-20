@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2
 
@@ -20,7 +20,7 @@ jobs:
       - name: Setup node environment
         uses: actions/setup-node@46071b5c7a2e0c34e49c3cb8a0e792e86e18d5ea # tag=v2.1.5
         with:
-          node-version: 14 
+          node-version: 16 
         
       - name: Install node dependencies
         run: npm ci --no-audit
@@ -28,8 +28,4 @@ jobs:
         
       - name: Build WASM
         run: dotnet build --configuration Release
-        working-directory: ./src/Jellyfin.Blazor.Wasm
-
-      - name: Test WASM
-        run: dotnet test --configuration Release
         working-directory: ./src/Jellyfin.Blazor.Wasm

@@ -23,19 +23,35 @@ jobs:
       - name: Setup node environment
         uses: actions/setup-node@46071b5c7a2e0c34e49c3cb8a0e792e86e18d5ea # tag=v2.1.5
         with:
-          node-version: 14 
+          node-version: 16 
       
+      - name: Generate version number using date and run number
+        shell: pwsh
+        id: version-creator
+        run: |
+          $buildDay = Get-Date -Format "yyyy.Mdd"
+          $ver = $buildDay + "." + $env:GITHUB_RUN_NUMBER + ".0"
+          echo "::set-output name=APP_VERSION::$ver"
+
       - name: Install Maui Workload
-        run: dotnet workload install maui
+        run: dotnet workload install maui-windows
 
       - name: Install node dependencies
         run: npm ci --no-audit
         working-directory: ./src/Jellyfin.Blazor.Shared
         
+
       - name: Build
         working-directory: ./src/Jellyfin.Blazor.Maui
-        run: dotnet build -c Release -f net6.0-windows
+        shell: pwsh
+        run: |
+          dotnet build -c Release -f net6.0-windows10.0.19041.0
+          dotnet publish -c Release -f net6.0-windows10.0.19041.0
+          New-Item -Path .. -Name "artifacts" -ItemType Directory
+          Get-ChildItem -Path Jellyfin.Maui*.msix -Recurse -File | Copy-Item -Destination ..\artifacts\
 
-      - name: Test
-        working-directory: ./src/Jellyfin.Blazor.Maui
-        run: dotnet test -c Release -f net6.0-windows
+      - uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
+        with:
+          name: windows-v${{ steps.version-creator.outputs.APP_VERSION }}-artifacts
+          path: |             
+            .\src\artifacts\Jellyfin.Maui*.msix

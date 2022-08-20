@@ -8,16 +8,12 @@ on:
 
 jobs:
   build:
-    runs-on: macos-11
+    runs-on: macos-12
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
     steps:
       - uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2
-
-      - uses: maxim-lobanov/setup-xcode@4aa4176a819ae7c019451acfda0bba67bffc6704 # tag=v1
-        with:
-          xcode-version: '13.1'
 
       - name: Setup .NET
         uses: actions/setup-dotnet@608ee757cfcce72c2e91e99aca128e0cae67de87 # tag=v1
@@ -27,19 +23,34 @@ jobs:
       - name: Setup node environment
         uses: actions/setup-node@46071b5c7a2e0c34e49c3cb8a0e792e86e18d5ea # tag=v2.1.5
         with:
-          node-version: 14 
+          node-version: 16 
       
+      - name: Generate version number using date and run number
+        id: version-creator
+        shell: bash
+        run: |
+          buildDay=`date +%Y.%m%d`
+          echo $buildDay
+          runNum=$GITHUB_RUN_NUMBER
+          ver="${buildDay}.${runNum}.0"
+          echo $ver
+          echo "::set-output name=APP_VERSION::$ver"
+
       - name: Install Maui Workload
-        run: dotnet workload install maui
+        run: dotnet workload install maui-maccatalyst
 
       - name: Install node dependencies
         run: npm ci --no-audit
         working-directory: ./src/Jellyfin.Blazor.Shared
         
       - name: Build
-        working-directory: ./src/Jellyfin.Blazor.Maui
-        run: dotnet build -c Release -f net6.0-maccatalyst
-
-      - name: Test
-        working-directory: ./src/Jellyfin.Blazor.Maui
-        run: dotnet test -c Release -f net6.0-maccatalyst
+        working-directory: ./src
+        run: |
+          dotnet build -f net6.0-maccatalyst -c Release -o ../artifacts
+          dotnet publish -f net6.0-maccatalyst -c Release -p:BuildIpa=True -o ../artifacts
+      
+      - name: Upload MacCatalyst build artifacts
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
+        with:
+          name: maccatalyst-v${{ steps.version-creator.outputs.APP_VERSION }}-artifacts
+          path: ./src/artifacts/**/*.pkg
