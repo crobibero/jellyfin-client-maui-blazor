@@ -10,12 +10,12 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@fontsource/noto-sans": "^4.5.1",
-        "@fontsource/noto-sans-hk": "^4.5.2",
-        "@fontsource/noto-sans-jp": "^4.5.2",
-        "@fontsource/noto-sans-kr": "^4.5.2",
-        "@fontsource/noto-sans-sc": "^4.5.2",
-        "@fontsource/noto-sans-tc": "^4.5.2",
+        "@fontsource/noto-sans": "4.5.1",
+        "@fontsource/noto-sans-hk": "4.5.2",
+        "@fontsource/noto-sans-jp": "4.5.2",
+        "@fontsource/noto-sans-kr": "4.5.2",
+        "@fontsource/noto-sans-sc": "4.5.2",
+        "@fontsource/noto-sans-tc": "4.5.2",
         "@mdi/font": "^7.0.0",
         "tailwindcss": "^3.0.0"
     },
